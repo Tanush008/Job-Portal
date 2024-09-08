@@ -1,0 +1,66 @@
+.heading h1 {
+  color: black;
+  font-size: 40px;
+  padding-left: 50px;
+}
+.heading span {
+  color: red;
+  font-size: 40px;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list {
+  display: flex;
+  gap: 40px;
+  padding-right: 120px;
+}
+ul {
+  list-style: none;
+}
+img {
+  width: 50px;
+  border-radius: 20px;
+  margin-right: 80px;
+  /* margin-left: 30px; */
+  margin-top: 10px;
+  cursor: pointer;
+}
+.mini-img{
+    margin-left: 20px;
+}
+.text-content {
+  padding-right: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+.link_1 {
+  margin-right: 10px;
+  margin-left: 20px;
+}
+.link_2 {
+  margin-right: 10px;
+  margin-left: 20px;
+}
+.side-content {
+  display: flex;
+  /* gap: 10px; */
+  
+}
+.box {
+  background-color: wheat;
+  height: 160px;
+}
+.button {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.log{
+    margin-right: 30px;
+}
+.outline{
+    margin-right: 10px;
+}

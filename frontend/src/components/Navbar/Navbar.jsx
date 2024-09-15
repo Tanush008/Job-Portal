@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover"
 import { Button } from '../ui/button'
 import { LogOut, User2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 // import { Popover } from '@radix-ui/react-popover'
 const Navbar = () => {
     const user = false;
@@ -24,8 +25,8 @@ const Navbar = () => {
                         {
                             !user ? (
                                 <div class="log">
-                                    <Button class="outline">Login</Button>
-                                    <Button>Signup</Button>
+                                    <Link to="/login"><Button class="outline">Login</Button></Link>
+                                    <Link to="/signUp"><Button>Signup</Button></Link>
                                 </div>
                             ) : (
                                 <Popover>
@@ -50,11 +51,11 @@ const Navbar = () => {
                                                 <Button class="link_2">Logout</Button>
                                             </div>
                                         </div>
+
                                     </PopoverContent>
                                 </Popover>
                             )
                         }
-
                     </div >
                 </div >
             </main >

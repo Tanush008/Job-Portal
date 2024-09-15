@@ -1,0 +1,59 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: wheat; */
+  /* width: 53vw; */
+}
+.form {
+  width: 53vw;
+  border: gray 1px solid;
+  border-radius: 10px;
+  margin-left: 20px;
+  height: auto ;
+  padding-left: 34px;
+}
+.full_name {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.name {
+  border-radius: 5px;
+  width: 50vw;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.option {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+}
+.profile {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.signup {
+  background-color: green;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 45vw;
+  height: 39px;
+  border-radius: 10px;
+  margin-top: 18px;
+  margin-left: 30px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.login {
+  font-size: 18px;
+  font-weight: 700;
+  color: blue;
+}

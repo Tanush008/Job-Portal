@@ -1,22 +1,23 @@
 import jwt from "jsonwebtoken";
 const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.cookie.token;
+    const token = req.cookies.token;
     if (!token)
       return res.status(400).json({
         message: "User not authenticated",
         success: false,
       });
     const decode = jwt.verify(token, process.env.SECRET_KEY);
-    if (!decode)
+    if (!decode) {
       return res.status(400).json({
         message: "Invalid token",
         success: false,
       });
+    }
     req.id = decode.userId;
     next();
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
-export default isAuthenticated
+export default isAuthenticated;

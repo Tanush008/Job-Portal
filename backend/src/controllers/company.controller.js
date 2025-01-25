@@ -9,10 +9,10 @@ export const registerCompany = async (req, res) => {
         success: false,
       });
     }
-    let company = await Company.find({ name: CompanyName });
-    if (!company) {
+    let company = await Company.findOne({ name: CompanyName });
+    if (company) {
       return res.status(400).json({
-        message: "company not found",
+        message: "Already Existed",
         success: false,
       });
     }
@@ -22,16 +22,17 @@ export const registerCompany = async (req, res) => {
     });
     return res.status(200).json({
       message: "Company registered successfully",
-      success: false,
+      company,
+      success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
 export const getCompany = async (req, res) => {
   try {
     const userId = req.id; //logged in user id
-    const companies = await Company.findById({ userId });
+    const companies = await Company.find({ userId });
     if (!companies) {
       return res.status(400).json({
         message: "Companies not found",
@@ -43,13 +44,13 @@ export const getCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
-export const getCompanyBYId = async (req, res) => {
+export const getCompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
-    const company = await Company.findById({ companyId });
+    const company = await Company.findById(companyId);
     if (!company) {
       return res.status(400).json({
         message: "Company not found",
@@ -58,10 +59,11 @@ export const getCompanyBYId = async (req, res) => {
     }
     return res.status(200).json({
       message: "Company found successfully",
+      company,
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
 export const updateCompany = async (req, res) => {
@@ -70,7 +72,7 @@ export const updateCompany = async (req, res) => {
     const file = req.file;
 
     const updateData = { name, desc, website, location };
-    const company = await Company.findByIdAndDelete(req.params.id, updateData, {
+    const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
     if (!company) {
@@ -84,6 +86,6 @@ export const updateCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };

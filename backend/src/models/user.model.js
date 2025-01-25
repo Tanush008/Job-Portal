@@ -11,8 +11,8 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
     phoneNumber: {
-      type: Number,
-      required: true,
+      type: String,
+      // required: true,
     },
     password: {
       type: String,
@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema(
       bio: { type: String },
       role: [{ type: String }],
       resume: { type: String },
+      skills: [{ type: String }],
       resumeOriginalName: { type: String },
       company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
 

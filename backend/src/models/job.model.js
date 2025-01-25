@@ -1,5 +1,4 @@
-import { application } from "express";
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 const jobSchema = new mongoose.Schema(
   {
     title: {
@@ -11,19 +10,19 @@ const jobSchema = new mongoose.Schema(
     },
     salary: {
       type: Number,
-      require: true,
+      required: true,
     },
     location: {
       type: String,
       required: true,
     },
     company: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
+      required: true,
     },
     jobType: {
       type: String,
-      required: true,
     },
     position: {
       type: Number,
@@ -34,13 +33,13 @@ const jobSchema = new mongoose.Schema(
         type: String,
       },
     ],
-    createdBy: {
-      type: Schema.Types.ObjectId,
+    created_By: {
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
     application: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Application",
       },
     ],

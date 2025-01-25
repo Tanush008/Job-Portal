@@ -1,10 +1,9 @@
-import { application } from "express";
 import { Application } from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
 
 export const applyJob = async (req, res) => {
   try {
-    const user = req.id;
+    const userId = req.id;
     const jobId = req.params.id;
     if (!jobId) {
       return res.status(400).json({
@@ -12,7 +11,10 @@ export const applyJob = async (req, res) => {
         success: false,
       });
     }
-    const existingApplicantion = await Application.findById({ user, jobId });
+    const existingApplicantion = await Application.findOne({
+      job: jobId,
+      applicant: userId,
+    });
     if (existingApplicantion) {
       return res.status(400).json({
         message: "You have already applied",
@@ -29,7 +31,7 @@ export const applyJob = async (req, res) => {
     // create a new Application
     const newApplication = await Application.create({
       job: jobId,
-      user: user,
+      applicant: userId,
     });
     job.application.push(newApplication._id);
     await job.save();
@@ -38,13 +40,13 @@ export const applyJob = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
 export const getApplidJobs = async (req, res) => {
   try {
-    const userid = req.id;
-    const applicantion = await Application.find({ applicant: userId })
+    const userId = req.id;
+    const application = await Application.find({ applicant: userId })
       .sort({ createdAt: -1 })
       .populate({
         path: "job",
@@ -54,25 +56,25 @@ export const getApplidJobs = async (req, res) => {
           options: { sort: { createdAt: -1 } },
         },
       });
-    if (!applicantion) {
+    if (!application) {
       return res.stauts(400).json({
         message: "No applications",
         success: false,
       });
     }
     return res.status(200).json({
-      applicantion,
+      application,
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
 export const getApplicant = async (req, res) => {
   try {
     const jobId = req.params.id;
     const job = await Job.findById(jobId).populate({
-      paths: "application",
+      path: "application",
       options: { sort: { createdAt: -1 } },
       populate: {
         path: "applicant",
@@ -89,7 +91,7 @@ export const getApplicant = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };
 export const updateStaus = async (req, res) => {
@@ -116,6 +118,6 @@ export const updateStaus = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log();
+    console.log(error);
   }
 };

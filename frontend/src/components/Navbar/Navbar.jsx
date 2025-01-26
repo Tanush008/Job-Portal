@@ -7,9 +7,12 @@ import {
 } from "@/components/ui/popover"
 import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import store from '@/redux/store'
 // import { Popover } from '@radix-ui/react-popover'
 const Navbar = () => {
-    const user = false;
+    // const user = false;
+    const user = useSelector(store => store.auth)
     return (
         <>
             <main>
@@ -18,7 +21,7 @@ const Navbar = () => {
                     <ul className='flex gap-20 text-[22px] font-semibold'>
                         <Link to={'/'}>Home</Link>
                         <Link to={'/jobs'}>Jobs</Link >
-                        <Link to={'/about'}>About</Link>
+                        <Link to={'/browse'}>Browse</Link>
                     </ul>
                     {
                         !user ? (
@@ -27,26 +30,26 @@ const Navbar = () => {
                                 <Link to="/signUp"><Button>Signup</Button></Link>
                             </div>
                         ) : (
-                            <Popover>
+                            <Popover >
                                 <PopoverTrigger asChild>
-                                    <Avatar>
-                                        <img src="https://github.com/shadcn.png" />
+                                    <Avatar className='px-2'>
+                                        <img className='size-9 rounded-md' src="https://github.com/shadcn.png" />
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent>
                                     <div class="box">
                                         <div className="side-content">
                                             <Avatar class="mini-img">
-                                                <img src="https://github.com/shadcn.png" />
+                                                <img className='size-10 rounded-md' src="https://github.com/shadcn.png" />
                                             </Avatar>
                                             <div className="text-content">
                                                 <h4>Tanush Agg</h4>
                                                 <p>Lorem, ipsum dolor.</p>
                                             </div>
                                         </div>
-                                        <div class="button">
-                                            <Button class="link_1">View Profile</Button>
-                                            <Button class="link_2">Logout</Button>
+                                        <div>
+                                            <Button className='flex mb-2 mt-2'>View Profile</Button>
+                                            <Button className='flex'>Logout</Button>
                                         </div>
                                     </div>
                                 </PopoverContent>

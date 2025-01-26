@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
-import './signUp.css'
+// import './signUp.css'
 import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
@@ -62,58 +62,126 @@ const SignUp = () => {
     return (
         <>
             <Navbar />
-            <div class="main">
-                <form class="form" onSubmit={submitHandler}>
-                    <h1>Sign Up</h1>
-                    <div class="full_name">
-                        <Label for="name">Full Name</Label>
-                        <Input class="name" type="text" id="name" name="fullname" placeholder="Full Name" required
-                            value={input.fullname}
-                            onChange={EventHandler}
-                        />
-                    </div>
-                    <div class="full_name">
-                        <Label for="Phone">Phone Number</Label>
-                        <Input class="name" type="text" id="Phone" name="PhoneNumber" placeholder="Phone Number" required
-                            value={input.PhoneNumber}
-                            onChange={EventHandler} />
-                    </div>
-                    <div class="full_name">
-                        <Label for="email">Email</Label>
-                        <Input class="name" type="email" id="email" name="email" placeholder="Email" required
-                            value={input.email}
-                            onChange={EventHandler} />
-                    </div>
-                    <div class="full_name">
-                        <Label for="name">Password</Label>
-                        <Input class="name" type="password" id="password" name="Password" placeholder="Password" required
-                            value={input.Password}
-                            onChange={EventHandler} />
-                    </div>
-                    <RadioGroup class="option">
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+                <form className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg" onSubmit={submitHandler}>
+                    <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Sign Up</h1>
+
+                    <div className="space-y-6">
                         <div>
-                            <Input type="radio" name="role" id="recuriter" value="recuriter"
-                                checked={input.role === 'recuriter'}
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input
+                                className="mt-1 block  h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                type="text"
+                                id="name"
+                                name="fullname"
+                                placeholder="Full Name"
+                                required
+                                value={input.fullname}
                                 onChange={EventHandler}
                             />
-                            <Label for="recuriter">Recuriter</Label>
                         </div>
+
                         <div>
-                            <Input type="radio" name="role" id="student" value="student"
-                                checked={input.role === 'student'}
-                                onChange={EventHandler} />
-                            <Label for="student">Student</Label>
+                            <label htmlFor="Phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input
+                                className="mt-1 block  h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                type="text"
+                                id="Phone"
+                                name="PhoneNumber"
+                                placeholder="Phone Number"
+                                required
+                                value={input.PhoneNumber}
+                                onChange={EventHandler}
+                            />
                         </div>
-                        <div class="profile">
-                            <Label for="profile">Profile</Label>
-                            <Input class="profile" accept="image/*" type="file" id="profile" name="name"
-                                placeholder="Full Name" required
-                                onChange={FileHandler} />
+
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                            <input
+                                className="mt-1 block  h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Email"
+                                required
+                                value={input.email}
+                                onChange={EventHandler}
+                            />
                         </div>
-                    </RadioGroup>{
-                        loading ? <Button><Loader2 />Please Wait</Button> : <Button type="submit" class="signup">Sign in</Button>
-                    }
-                    <span>Already have Account?<Link class="login" to="/login">Login</Link></span>
+
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                            <input
+                                className="mt-1 block  h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                type="password"
+                                id="password"
+                                name="Password"
+                                placeholder="Password"
+                                required
+                                value={input.Password}
+                                onChange={EventHandler}
+                            />
+                        </div>
+
+                        <RadioGroup className="space-y-4">
+                            <div className="flex items-center space-x-3">
+                                <input
+                                    type="radio"
+                                    name="role"
+                                    id="recuriter"
+                                    value="recuriter"
+                                    checked={input.role === 'recuriter'}
+                                    onChange={EventHandler}
+                                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label htmlFor="recuriter" className="text-sm font-medium text-gray-700">Recruiter</label>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                                <input
+                                    type="radio"
+                                    name="role"
+                                    id="student"
+                                    value="student"
+                                    checked={input.role === 'student'}
+                                    onChange={EventHandler}
+                                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label htmlFor="student" className="text-sm font-medium text-gray-700">Student</label>
+                            </div>
+                            <div className="mt-4">
+                                <label htmlFor="profile" className="block text-sm font-medium text-gray-700">Profile</label>
+                                <input
+                                    className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                                    accept="image/*"
+                                    type="file"
+                                    id="profile"
+                                    name="name"
+                                    required
+                                    onChange={FileHandler}
+                                />
+                            </div>
+                        </RadioGroup>
+
+                        {loading ? (
+                            <button className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center">
+                                <Loader2 className="animate-spin mr-2" />Please Wait
+                            </button>
+                        ) : (
+                            <button
+                                type="submit"
+                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Sign Up
+                            </button>
+                        )}
+
+                        <p className="text-center text-sm text-gray-600">
+                            Already have an Account?{' '}
+                            <Link className="font-medium text-indigo-600 hover:text-indigo-500" to="/login">
+                                Login
+                            </Link>
+                        </p>
+                    </div>
                 </form>
             </div>
         </>

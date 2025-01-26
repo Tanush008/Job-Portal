@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '../ui/input'
-import './signUp.css'
+// import './signUp.css'
 import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
@@ -10,7 +10,7 @@ import { toast } from '@/hooks/use-toast'
 import { USER_API_END_POINT } from '../utils/constant'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoading } from '@/redux/authSlice'
+import { setLoading, setUser } from '@/redux/authSlice'
 import { Loader2 } from 'lucide-react'
 
 const Login = () => {
@@ -31,7 +31,7 @@ const Login = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            dispatch(setLoading(true))  
+            dispatch(setLoading(true))
             const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
                 headers: {
                     "Content-Type": "application/json"
@@ -39,6 +39,7 @@ const Login = () => {
                 withCredentials: true,
             })
             if (res.data.success) {
+                dispatch(setUser(res.data.user))
                 navigate('/');
                 toast.success(res.data.message);
             }
@@ -53,40 +54,92 @@ const Login = () => {
     return (
         <>
             <Navbar />
-            <div class="main">
-                <form class="form" onSubmit={submitHandler}>
-                    <h1>Login</h1>
-                    <div class="full_name">
-                        <Label for="email">Email</Label>
-                        <Input class="name" type="email" id="email" name="email" placeholder="Email"
-                            value={input.email}
-                            onChange={EventHandler}
-                            required />
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+                <form className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md" onSubmit={submitHandler}>
+                    <div className="text-center">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-6">Login</h1>
                     </div>
-                    <div class="full_name">
-                        <Label for="name">Password</Label>
-                        <Input class="name" type="password" id="password" name="password" placeholder="Password" required
-                            value={input.password}
-                            onChange={EventHandler} />
-                    </div>
-                    <RadioGroup class="option">
+                    <div className="space-y-6">
                         <div>
-                            <Input type="radio" name="role" id="recuriter" value="recuriter"
-                                checked={input.role === 'recuriter'}
-                                onChange={EventHandler} />
-                            <Label for="recuriter">Recuriter</Label>
+                            <label htmlFor="email" className=" text-xl block  font-medium text-gray-700">
+                                Email
+                            </label>
+                            <input
+                                className="mt-1 block h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                value={input.email}
+                                onChange={EventHandler}
+                                required
+                            />
                         </div>
                         <div>
-                            <Input type="radio" name="role" id="student" value="student"
-                                checked={input.role === 'student'}
-                                onChange={EventHandler} />
-                            <Label for="student">Student</Label>
+                            <label htmlFor="password" className="block text-xl font-medium text-gray-700">
+                                Password
+                            </label>
+                            <input
+                                className="mt-1 block w-full  h-[40px] px-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                value={input.password}
+                                onChange={EventHandler}
+                                required
+                            />
                         </div>
-                    </RadioGroup>
-                    {
-                        loading ? <Button><Loader2 />Please Wait</Button> : <Button type="submit" class="signup">Log In</Button>
-                    }
-                    <span>Don't have Account?<Link class="login" to="/signUp">SignUp</Link></span>
+                        <RadioGroup className="space-y-4">
+                            <div className="text-sm font-medium text-gray-700 mb-2">Select Role</div>
+                            <div className="flex space-x-6">
+                                <div className="flex items-center">
+                                    <Input
+                                        type="radio"
+                                        name="role"
+                                        id="recuriter"
+                                        value="recuriter"
+                                        checked={input.role === 'recuriter'}
+                                        onChange={EventHandler}
+                                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <Label htmlFor="recuriter" className="ml-2 block text-sm text-gray-700">
+                                        Recruiter
+                                    </Label>
+                                </div>
+                                <div className="flex items-center">
+                                    <Input
+                                        type="radio"
+                                        name="role"
+                                        id="student"
+                                        value="student"
+                                        checked={input.role === 'student'}
+                                        onChange={EventHandler}
+                                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <Label htmlFor="student" className="ml-2 block text-sm text-gray-700">
+                                        Student
+                                    </Label>
+                                </div>
+                            </div>
+                        </RadioGroup>
+                        {loading ? (
+                            <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <Loader2 className="animate-spin mr-2" />
+                                Please Wait
+                            </button>
+                        ) : (
+                            <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Log In
+                            </button>
+                        )}
+                        <div className="text-center text-sm text-gray-600">
+                            Don't have an account?{' '}
+                            <Link to="/signUp" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                Sign Up
+                            </Link>
+                        </div>
+                    </div>
                 </form>
             </div>
         </>

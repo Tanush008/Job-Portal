@@ -6,7 +6,7 @@ import LatesJobs from '../LatesJobs'
 import Footer from '../Footer'
 const Home = () => {
     return (
-        <div>
+        <div className='bg-black text-white'>
             <Navbar />
             <HomeSection />
             <CategoryCarousel />

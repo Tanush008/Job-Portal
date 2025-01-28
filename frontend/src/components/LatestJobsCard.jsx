@@ -6,7 +6,7 @@ const LatestJobsCard = () => {
     return (
         <>
             <div className='p-5 rounded-md border border-gray-100 cursor-pointer bg-white shadow-xl 
-                transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-3'>
+                transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-3 text-red-500'>
                 <div>
                     <h1 className='font-bold text-lg'>Company Name</h1>
                     <p className='text-md text-gray-500'>India</p>

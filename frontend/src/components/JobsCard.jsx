@@ -1,10 +1,13 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
-import {  Bookmark } from 'lucide-react'
+import { Bookmark } from 'lucide-react'
 import { Badge } from './ui/badge'
+import { Link, useNavigate } from 'react-router-dom'
 
 const JobCard = () => {
+    const navigate = useNavigate();
+    const jobId = "rrereqwrq"
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100  transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-3 cursor-pointer'>
             <div className='flex items-center justify-between'>
@@ -34,7 +37,7 @@ const JobCard = () => {
 
             </div>
             <div className='flex items-center gap-4 mt-4'>
-                <Button variant="outline" className='text-white'>Details</Button>
+                <Button variant="outline" onClick={() => navigate(`/job/descrption/${jobId}`)} className='text-white'>Details</Button>
                 <Button className='bg-[#7209b7]'>Save For Later</Button>
             </div>
         </div>

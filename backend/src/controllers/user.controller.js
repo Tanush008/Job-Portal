@@ -67,11 +67,11 @@ export const login = async (req, res) => {
       return res.status(400).json({
         message: "account doesn't exist with the role",
       });
-    } 
+    }
     const tokenData = {
       userId: user._id,
     };
-    const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
+    let token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
     user = {
@@ -102,7 +102,7 @@ export const login = async (req, res) => {
 // Logout
 export const Logout = async (req, res) => {
   try {
-    return res.status(200).cookie(token, { maxAge: 0 }).json({
+    return res.status(200).cookie("token", { maxAge: 0 }).json({
       message: "Logut successfully",
       success: true,
     });

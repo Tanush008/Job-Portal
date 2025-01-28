@@ -39,6 +39,9 @@ const SignUp = () => {
         formData.append("password", input.Password);
         formData.append("phoneNumber", input.PhoneNumber);
         formData.append("role", input.role);
+        if (input.file) {
+            formData.append("file", input.file);
+        }
         try {
             dispatch(setLoading(true));
             const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
@@ -155,7 +158,7 @@ const SignUp = () => {
                                     accept="image/*"
                                     type="file"
                                     id="profile"
-                                    name="name"
+                                    name="file"
                                     required
                                     onChange={FileHandler}
                                 />

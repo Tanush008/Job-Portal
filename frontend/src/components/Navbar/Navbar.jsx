@@ -9,10 +9,26 @@ import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@/redux/store'
+import { USER_API_END_POINT } from '../utils/constant'
+import axios from 'axios'
 // import { Popover } from '@radix-ui/react-popover'
 const Navbar = () => {
     // const user = false;
-    const user = useSelector(store => store.auth)
+    const user = useSelector((state) => state.auth.user)
+    const dispatch = useDispatch()
+
+    const LogoutButton = async () => {
+        try {
+            const res = await axios.get(`${USER_API_END_POINT}/logout`)
+            if (res.status === 200) {
+                dispatch({ type: 'LOGOUT' })
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    // console.log(user);
+
     return (
         <>
             <main>
@@ -30,7 +46,7 @@ const Navbar = () => {
                                 <Link to="/signUp"><Button>Signup</Button></Link>
                             </div>
                         ) : (
-                            <Popover >
+                            <Popover>
                                 <PopoverTrigger asChild>
                                     <Avatar className='px-2'>
                                         <img className='size-9 rounded-md' src="https://github.com/shadcn.png" />
@@ -48,8 +64,8 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <Button className='flex mb-2 mt-2'>View Profile</Button>
-                                            <Button className='flex'>Logout</Button>
+                                            <Button className='flex mb-2 mt-2'><Link to='/profile'>View Profile</Link></Button>
+                                            <Button className='flex' onClick={LogoutButton}>Logout</Button>
                                         </div>
                                     </div>
                                 </PopoverContent>

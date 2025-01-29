@@ -1,7 +1,10 @@
 import React from 'react'
 import { Badge } from './ui/badge'
+import { Button } from './ui/button';
 
 const JobsDesription = () => {
+    const isApplied =  true;
+    
     return (
         <div className='max-w-7xl mx-auto my-10'>
             <div className='flex items-center justify-between'>
@@ -13,12 +16,12 @@ const JobsDesription = () => {
                         <Badge className={'text-[#7209b7] font-bold'} variant="ghost">LPA</Badge>
                     </div>
                 </div>
-                {/* <Button
+                <Button
                     onClick={isApplied ? null : applyJobHandler}
                     disabled={isApplied}
                     className={`rounded-lg ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#7209b7] hover:bg-[#5f32ad]'}`}>
                     {isApplied ? 'Already Applied' : 'Apply Now'}
-                </Button> */}
+                </Button>
             </div>
             <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>
             <div className='my-4'>

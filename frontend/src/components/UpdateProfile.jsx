@@ -23,6 +23,9 @@ import { USER_API_END_POINT } from './utils/constant';
 import { setUser } from '@/redux/authSlice';
 import { toast } from '@/hooks/use-toast';
 import store from '@/redux/store';
+import { Toast } from './ui/toast';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialog-paper': {
@@ -42,7 +45,9 @@ const UpdateProfile = ({ open, setOpen }) => {
         phoneNumber: user?.phoneNumber || "",
         bio: user?.profile?.bio || "",
         skills: user?.profile?.skills?.map(skill => skill) || "",
-        file: user?.profile?.resume || ""
+        file: user?.profile?.resume || "",
+        // resume: user?.profile?.resume || ""
+
     });
     const dispatch = useDispatch();
     // const handleOpen = () => setOpen(true);
@@ -56,8 +61,32 @@ const UpdateProfile = ({ open, setOpen }) => {
     };
     const fileChange = (e) => {
         const file = e.target.files?.[0];
+        if (file && file.type.startsWith('image/')) {
+            setInput({ ...input, file });
+            // Optional: Preview the image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // You can add image preview logic here if needed
+            };
+            reader.readAsDataURL(file);
+        } else {
+            Toast({
+                title: "Invalid file type",
+                description: "Please select an image file",
+                variant: "destructive",
+            });
+        }
+    };
+
+    // Add new resume file change handler
+    const fileChangeHandler = (e) => {
+        const file = e.target.files?.[0];
         setInput({ ...input, file })
     }
+
+
+    // Add reference to file input
+    const fileInputRef = React.useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -67,10 +96,15 @@ const UpdateProfile = ({ open, setOpen }) => {
         formData.append("email", input.email);
         formData.append("phoneNumber", input.phoneNumber);
         formData.append("bio", input.bio);
-        formData.append("skills", input.skills);
+        formData.append("skills", input.skills)
+
+        // formData.append('avatar', input.file[0]);
         if (input.file) {
             formData.append("file", input.file);
         }
+        // if (input.resume) {
+        //     formData.append("resume", input.resume);
+        // }
         try {
             setLoading(true);
             const res = await axios.post(`${USER_API_END_POINT}/profile/Update`, formData, {
@@ -112,9 +146,9 @@ const UpdateProfile = ({ open, setOpen }) => {
                 onClose={handleClose}
                 maxWidth="sm"
                 fullWidth
-                TransitionProps={{
-                    timeout: 400,
-                }}
+            // TransitionProps={{
+            //     timeout: 400,
+            // }}
             >
                 <DialogTitle
                     sx={{
@@ -123,7 +157,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                         textAlign: 'center',
                     }}
                 >
-                    Update Your Profile
+
                 </DialogTitle>
                 <DialogContent>
                     <Box
@@ -145,6 +179,14 @@ const UpdateProfile = ({ open, setOpen }) => {
                                     border: '4px solid #fff',
                                     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                                 }}
+                                src={input.file instanceof File ? URL.createObjectURL(input.file) : user?.profile?.avatar}
+                            />
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={fileChange}
+                                accept="image/*"
+                                style={{ display: 'none' }}
                             />
                             <IconButton
                                 sx={{
@@ -155,8 +197,9 @@ const UpdateProfile = ({ open, setOpen }) => {
                                     '&:hover': { backgroundColor: '#1976D2' },
                                 }}
                                 size="small"
+                                onClick={() => fileInputRef.current?.click()}
                             >
-                                <CameraAltIcon sx={{ color: 'white' }} onChange={fileChange} />
+                                <CameraAltIcon sx={{ color: 'white' }} />
                             </IconButton>
                         </Box>
 
@@ -200,6 +243,19 @@ const UpdateProfile = ({ open, setOpen }) => {
                             onChange={handleChange}
                             variant="outlined"
                         />
+
+                        {/* Add new resume upload field */}
+                        <div className='grid grid-cols-4 items-center gap-4'>
+                            <Label htmlFor="file" className="text-right text-white">Resume</Label>
+                            <Input
+                                id="file"
+                                name="file"
+                                type="file"
+                                accept="application/pdf"
+                                onChange={fileChangeHandler}
+                                className="col-span-3"
+                            />
+                        </div>
                     </Box>
                 </DialogContent>
                 <DialogActions sx={{ p: 3 }}>

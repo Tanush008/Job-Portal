@@ -6,22 +6,25 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Button } from '../ui/button'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@/redux/store'
 import { USER_API_END_POINT } from '../utils/constant'
 import axios from 'axios'
+import { setUser } from '@/redux/authSlice'
 // import { Popover } from '@radix-ui/react-popover'
 const Navbar = () => {
     // const user = false;
     const user = useSelector((state) => state.auth.user)
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const LogoutButton = async () => {
         try {
-            const res = await axios.get(`${USER_API_END_POINT}/logout`)
-            if (res.status === 200) {
-                dispatch({ type: 'LOGOUT' })
+            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true })
+            if (res.data.success) {
+                dispatch(setUser(null))
+                navigate("/ ")
             }
         } catch (error) {
             console.log(error);

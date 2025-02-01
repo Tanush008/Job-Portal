@@ -15,7 +15,7 @@ import { setUser } from '@/redux/authSlice'
 // import { Popover } from '@radix-ui/react-popover'
 const Navbar = () => {
     // const user = false;
-    const user = useSelector((state) => state.auth.user)
+    const { user } = useSelector(store => store.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate();
 

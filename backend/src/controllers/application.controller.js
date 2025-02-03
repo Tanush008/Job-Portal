@@ -18,6 +18,7 @@ export const applyJob = async (req, res) => {
     if (existingApplicantion) {
       return res.status(400).json({
         message: "You have already applied",
+        existingApplicantion,
         success: false,
       });
     }
@@ -33,10 +34,13 @@ export const applyJob = async (req, res) => {
       job: jobId,
       applicant: userId,
     });
+    console.log(userId);
+
     job.application.push(newApplication._id);
     await job.save();
     return res.status(200).json({
       message: "Job applied successfully",
+      job,
       success: true,
     });
   } catch (error) {

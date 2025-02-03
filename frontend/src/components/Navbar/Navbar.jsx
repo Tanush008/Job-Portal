@@ -38,9 +38,20 @@ const Navbar = () => {
                 <div className='heading navbar h-[100px] flex items-center justify-between bg-black text-white px-[10px]'>
                     <h1 className='text-xl'>Job<span className='text-blue-600 '>Portal</span></h1>
                     <ul className='flex gap-20 text-[22px] font-semibold'>
-                        <Link to={'/'}>Home</Link>
-                        <Link to={'/jobs'}>Jobs</Link >
-                        <Link to={'/browse'}>Browse</Link>
+                        {user?.role === 'recuriter' ? (
+                            <>
+                                <Link to='/admin/companies'>Companies</Link>
+                                <Link to='/admin/jobs'>Jobs</Link>
+                            </>
+                        ) : (
+                            <>
+
+                                <Link to={'/'}>Home</Link>
+                                <Link to={'/jobs'}>Jobs</Link >
+                                <Link to={'/browse'}>Browse</Link>
+                            </>
+                        )
+                        }
                     </ul>
                     {
                         !user ? (
@@ -67,7 +78,11 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <Button className='flex mb-2 mt-2'><Link to='/profile'>View Profile</Link></Button>
+                                            {
+                                                user && user?.role === 'student' && (
+                                                    <Button className='flex mb-2 mt-2'><Link to='/profile'>View Profile</Link></Button>
+                                                )
+                                            }
                                             <Button className='flex' onClick={LogoutButton}>Logout</Button>
                                         </div>
                                     </div>

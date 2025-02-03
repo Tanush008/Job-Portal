@@ -9,6 +9,7 @@ import Browse from './components/Browse'
 import Profile from './components/Profile'
 import JobsDesription from './components/JobsDesription'
 import Logout from './components/Logout'
+import Companies from './components/admin/Companies'
 function App() {
   const appRouter = createBrowserRouter([
     {
@@ -32,8 +33,8 @@ function App() {
       element: <Browse />
     },
     {
-      path:'/job/descrption/:id',
-      element:<JobsDesription/>
+      path: '/job/descrption/:id',
+      element: <JobsDesription />
     },
     {
       path: '/profile',
@@ -41,8 +42,13 @@ function App() {
 
     },
     {
-      path:'/logout',
-      element:<Logout/>
+      path: '/logout',
+      element: <Logout />
+    },
+    // for admin
+    {
+      path: 'admin/companies',
+      element: <Companies/>
     }
   ])
   return (

@@ -14,7 +14,7 @@ import Navbar from '../Navbar/Navbar'
 const Companies = () => {
     // useGetAllCompanies();
     // const [input, setInput] = useState("");
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // const dispatch = useDispatch();
 
     // useEffect(() => {

@@ -2,14 +2,14 @@ import { Company } from "../models/company.model.js";
 
 export const registerCompany = async (req, res) => {
   try {
-    const { CompanyName } = req.body;
-    if (!CompanyName) {
+    const { companyName } = req.body;
+    if (!companyName) {
       return res.status(400).json({
         message: "Company name is required",
         success: false,
       });
     }
-    let company = await Company.findOne({ name: CompanyName });
+    let company = await Company.findOne({ name: companyName });
     if (company) {
       return res.status(400).json({
         message: "Already Existed",
@@ -17,7 +17,7 @@ export const registerCompany = async (req, res) => {
       });
     }
     company = await Company.create({
-      name: CompanyName,
+      name: companyName,
       userId: req.id,
     });
     return res.status(200).json({
@@ -69,6 +69,8 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { name, desc, website, location } = req.body;
+    console.log(name, desc, website, location, website);
+
     const file = req.file;
 
     const updateData = { name, desc, website, location };

@@ -3,7 +3,7 @@ import React from 'react'
 // import { Badge } from './ui/badge'
 
 const LatestJobsCard = ({ job }) => {
-    console.log(job.title);
+    // console.log(job.title);
 
     return (
         <>

@@ -1,14 +1,14 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 import getDatauri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 // Register
 export const register = async (req, res) => {
   try {
     const { fullname, email, password, role } = req.body;
-    // console.log(fullname, email, password, role);
+    console.log(fullname, email, password, role);
     if (!fullname || !email || !password || !role) {
       return res.status(400).json({
         message: "Please fill in all fields",
@@ -65,15 +65,15 @@ export const login = async (req, res) => {
         success: false,
       });
     }
-    if (role != user.role) {
+    if (role !== user.role) {
       return res.status(400).json({
         message: "account doesn't exist with the role",
-      });
+      }); 
     }
     const tokenData = {
       userId: user._id,
     };
-    let token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
+    const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
     user = {
@@ -87,8 +87,8 @@ export const login = async (req, res) => {
     return res
       .status(200)
       .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 1000,
-        https: true,
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+        httpsOnly: true,
         sameSite: "strict",
       })
       .json({

@@ -32,9 +32,9 @@ const userSchema = new mongoose.Schema(
       },
     },
     role: {
-      enum: ["student", "recuriter"],
-      required: true,
       type: String,
+      enum: ["student", "recruiter"],
+      required: true,
     },
   },
   { timestamps: true }

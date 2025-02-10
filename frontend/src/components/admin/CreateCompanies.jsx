@@ -25,7 +25,7 @@ const CreateCompanies = () => {
             console.log(res.data);
 
             if (res.data.success) {
-                dispatch(setSingleCompany(res.data.companys))
+                dispatch(setSingleCompany(res.data.company))
                 // Toast.success(res.data.message)
                 const companyId = res?.data?.company?._id
                 navigate(`/admin/companies/${companyId}`)

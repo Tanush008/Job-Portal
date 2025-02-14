@@ -38,7 +38,7 @@ const Navbar = () => {
                 <div className='heading navbar h-[100px] flex items-center justify-between bg-black text-white px-[10px]'>
                     <h1 className='text-xl'>Job<span className='text-blue-600 '>Portal</span></h1>
                     <ul className='flex gap-20 text-[22px] font-semibold'>
-                        {user?.role === 'recuriter' ? (
+                        {user?.role === 'recruiter' ? (
                             <>
                                 <Link to='/admin/companies'>Companies</Link>
                                 <Link to='/admin/jobs'>Jobs</Link>
@@ -63,18 +63,22 @@ const Navbar = () => {
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <Avatar className='px-2'>
-                                        <img className='size-9 rounded-md' src="https://github.com/shadcn.png" />
+                                        <img
+                                            className='size-9 rounded-md'
+                                            src={user?.profile?.profilePhoto || 'https://github.com/shadcn.png'}
+                                            alt="@shadcn"
+                                        />
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent>
                                     <div class="box">
                                         <div className="side-content">
                                             <Avatar class="mini-img">
-                                                <img className='size-10 rounded-md' src="https://github.com/shadcn.png" />
+                                                <img className='size-10 rounded-md' src={user?.profile?.profilePhoto} />
                                             </Avatar>
                                             <div className="text-content">
-                                                <h4>Tanush Agg</h4>
-                                                <p>Lorem, ipsum dolor.</p>
+                                                <h4>{user?.fullname}</h4>
+                                                <p>{user?.profile?.bio}</p>
                                             </div>
                                         </div>
                                         <div>

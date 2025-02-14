@@ -13,6 +13,9 @@ import Companies from './components/admin/Companies'
 import CreateCompanies from './components/admin/CreateCompanies'
 import CompanySetup from './components/admin/CompanySetup'
 import AdminJobs from './components/admin/adminJobs'
+// import { PostAdd } from '@mui/icons-material/'
+import PostJobs from './components/admin/PostJobs'
+import Applicants from './components/admin/Applicants'
 function App() {
   const appRouter = createBrowserRouter([
     {
@@ -64,8 +67,16 @@ function App() {
 
     {
       path: '/admin/jobs',
-      element: <AdminJobs/>
-    }
+      element: <AdminJobs />
+    },
+    {
+      path: '/admin/jobs/create',
+      element: <PostJobs />
+    },
+    {
+      path: '/admin/jobs/:id/applicants',
+      element: <Applicants />
+    },
   ])
   return (
     <>

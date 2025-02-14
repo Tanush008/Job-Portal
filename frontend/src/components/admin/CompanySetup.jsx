@@ -14,37 +14,38 @@ import store from '@/redux/store'
 // import store from '@/redux/store'
 
 const CompanySetup = () => {
+    const params = useParams();
+    console.log(params);
+    useGetAllSingleCompany(params.id)
     const [input, setInput] = useState({
         name: "",
-        description: "",
+        desc: "",
         website: "",
         location: "",
-        file: null,
+        file: "",
     })
     const { singleCompany } = useSelector(store => store.company)
-    console.log(singleCompany);
-    const params = useParams();
-    useGetAllSingleCompany(params.id)
+    // console.log(singleCompany.name);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     }
     const changeFileHandler = (e) => {
-        const file = e.target.file?.[0];
+        const file = e.target.files?.[0];
         setInput({ ...input, file })
     }
     const submitHandler = async (e) => {
         e.preventDefault()
         const formData = new FormData();
         formData.append('name', input.name);
-        formData.append('description', input.description);
+        formData.append('desc', input.desc);
         formData.append('website', input.website)
         formData.append('location', input.location);
         if (input.file) {
             formData.append('file', input.file);
         }
-        // console.log(input)
+        console.log(input)
         try {
             setLoading(true)
             const res = await axios.put(`${COMPANY_END_POINT}/update/${params.id}`, formData, {
@@ -64,17 +65,17 @@ const CompanySetup = () => {
         finally {
             setLoading(false)
         }
-
-        useEffect(() => {
-            setInput({
-                name: singleCompany.name || "",
-                description: singleCompany.description || "",
-                website: singleCompany.website || "",
-                location: singleCompany.location || "",
-                file: null,
-            })
-        }, [singleCompany])
     }
+
+    useEffect(() => {
+        setInput({
+            name: singleCompany.name || "",
+            description: singleCompany.desc || "",
+            website: singleCompany.website || "",
+            location: singleCompany.location || "",
+            file: singleCompany.file || null
+        })
+    }, [singleCompany])
     return (
         <div>
             <Navbar />
@@ -90,7 +91,7 @@ const CompanySetup = () => {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className=' '>
                             <Label>Company Name</Label>
-                            <Input className='text-white '
+                            <Input className='bg-black text-white'
                                 type="text"
                                 name="name"
                                 value={input.name}
@@ -101,8 +102,8 @@ const CompanySetup = () => {
                             <Label>Description</Label>
                             <Input className='text-white'
                                 type="text"
-                                name="description"
-                                value={input.description}
+                                name="desc"
+                                value={input.desc}
                                 onChange={changeEventHandler}
                             />
                         </div>

@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 // import { Popover } from '@mui/material';
 import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
-import { Avatar } from '@radix-ui/react-avatar';
-import { AvatarImage } from '../ui/avatar';
+import { AvatarImage, Avatar } from '../ui/avatar';
 import { Popover } from '../ui/popover';
 import { Edit2, MoreHorizontal } from 'lucide-react';
 import { useSelector } from 'react-redux';
@@ -14,7 +13,7 @@ const CompaniesTable = () => {
     const { companies, searchCompanyByText } = useSelector(store => store.company);
     const [filterCompany, setFilterCompany] = useState(companies);
     const navigate = useNavigate();
-    useEffect(() => { 
+    useEffect(() => {
         const filteredCompany = companies.length >= 0 && companies.filter((company) => {
             if (!searchCompanyByText) {
                 return true
@@ -42,7 +41,7 @@ const CompaniesTable = () => {
                             <tr>
                                 <TableCell>
                                     <Avatar>
-                                        <AvatarImage src={company.logo} />
+                                        <AvatarImage src={company.Logo} />
                                     </Avatar>
                                 </TableCell>
                                 <TableCell>{company.name}</TableCell>
@@ -61,8 +60,6 @@ const CompaniesTable = () => {
                             </tr>
                         ))
                     }
-                    // {/* )) */}
-                    // {/* } */}
                 </TableBody>
             </Table>
         </div>

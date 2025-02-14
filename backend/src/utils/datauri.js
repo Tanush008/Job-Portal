@@ -3,7 +3,8 @@ import path from "path";
 const getDatauri = (file) => {
   const parser = new DataUriParser();
   const extName = path.extname(file.originalname).toString();
-  console.log(file);
+  console.log("fdfaadfa");
+  console.log(file.originalname);
   return parser.format(extName, file.buffer);
 };
 export default getDatauri;

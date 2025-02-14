@@ -15,6 +15,9 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+    const file = req.file;
+    const fileUri = getDatauri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -28,6 +31,9 @@ export const register = async (req, res) => {
       email,
       role,
       password: hashedPassword,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
     // console.log(user.password);
     return res.status(201).json({
@@ -68,7 +74,7 @@ export const login = async (req, res) => {
     if (role !== user.role) {
       return res.status(400).json({
         message: "account doesn't exist with the role",
-      }); 
+      });
     }
     const tokenData = {
       userId: user._id,
@@ -142,15 +148,15 @@ export const updateProfile = async (req, res) => {
       user.profile.resume = cloudResponse.secure_url;
       user.profile.resumeOriginalName = file.originalname;
     }
-
+    
     await user.save();
     user = {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
-      password: user.password,
-      profile: user.profile,
+      phoneNumber: user.phoneNumber,
       role: user.role,
+      profile: user.profile,
     };
     return res.status(201).json({
       message: "Profile updated successfully",

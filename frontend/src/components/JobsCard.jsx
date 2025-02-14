@@ -25,7 +25,7 @@ const JobCard = ({ job }) => {
             <div className='flex items-center gap-2 my-2'>
                 <Button className='p-6' size='icon'>
                     <Avatar>
-                        <AvatarImage src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-5746111ce930e4340aa34a9eb626a302_screen.jpg?ts=1671431883" />
+                        <AvatarImage src={job?.company?.logo} />
                     </Avatar>
                 </Button>
                 <div>

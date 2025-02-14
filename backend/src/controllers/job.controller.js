@@ -1,4 +1,5 @@
 import { Job } from "../models/job.model.js";
+import { login } from "./user.controller.js";
 // import { login } from "./user.controller";
 
 export const postJob = async (req, res) => {
@@ -85,10 +86,13 @@ export const getJobById = async (req, res) => {
 export const AdminJob = async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ created_by: adminId }).populate({
+    // console.log(adminId);
+    const jobs = await Job.find({ created_By: adminId }).populate({
       path: "company",
-      created_At: -1,
+      createdAt: -1,
     });
+    // console.log(jobs);
+
     if (!jobs) {
       return res.status(404).json({
         message: "job not found",

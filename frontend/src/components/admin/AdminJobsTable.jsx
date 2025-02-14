@@ -7,25 +7,25 @@ import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import { Avatar } from '@radix-ui/react-avatar';
 import { AvatarImage } from '../ui/avatar';
 import { Popover } from '../ui/popover';
-import { Edit2, MoreHorizontal } from 'lucide-react';
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react';
 import { useSelector } from 'react-redux';
+// import store from '@/redux/store';
 
 const AdminJobsTable = () => {
-    const { companies, searchCompanyByText } = useSelector(store => store.company);
-    const [filterCompany, setFilterCompany] = useState(companies);
+    const { adminJobs, searchJobByText } = useSelector(store => store.jobs);
+    const [filterjobs, setFilterjobs] = useState(adminJobs);
     const navigate = useNavigate();
     useEffect(() => {
-        const filteredCompany = companies.length >= 0 && companies.filter((company) => {
-            if (!searchCompanyByText) {
+        const filteredjobs = adminJobs.length >= 0 && adminJobs.filter((job) => {
+            if (!searchJobByText) {
                 return true
             };
-            return company?.name?.toLowerCase().includes(searchCompanyByText.toLowerCase());
-
+            return job?.company?.name?.toLowerCase().includes(searchJobByText.toLowerCase())
         });
-        setFilterCompany(filteredCompany);
-    }, [companies, searchCompanyByText])
+        setFilterjobs(filteredjobs);
+    }, [adminJobs, searchJobByText])
     return (
-        <div className=''>
+        <div className='bg-green-600'>
             <Table>
                 <TableCaption>A list of your recent Jobs</TableCaption>
                 <TableHeader>
@@ -36,19 +36,25 @@ const AdminJobsTable = () => {
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody className='mt-10 bg-purple-500'>
                     {
-                        filterCompany?.map((company) => (
-                            <tr>
-                                <TableCell>{company.name}</TableCell>
-                                <TableCell>{company.createdAt.split("T")[0]}</TableCell>
-                                <TableCell className="text-right cursor-pointer">
+                        filterjobs?.map((job) => (
+                            <tr >
+                                <TableCell>{job?.company?.name}</TableCell>
+                                <TableCell>{job?.title}</TableCell>
+                                <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
+                                <TableCell className="text-right cursor-pointer gap-30  bg-red-300">
                                     <Popover>
-                                        <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
+                                        <PopoverTrigger className='mb-5'><MoreHorizontal  /></PopoverTrigger>
                                         <PopoverContent className="w-32">
-                                            <div onClick={() => navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
+
+                                            <div  onClick={() => navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2  w-fit cursor-pointer'>
                                                 <Edit2 className='w-4' />
                                                 <span>Edit</span>
+                                            </div>
+                                            <div onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)} className='flex items-center w-fit gap-2 cursor-pointer mt-2'>
+                                                <Eye className='w-4' />
+                                                <span>Applicants</span>
                                             </div>
                                         </PopoverContent>
                                     </Popover>
@@ -56,8 +62,6 @@ const AdminJobsTable = () => {
                             </tr>
                         ))
                     }
-                    // {/* )) */}
-                    // {/* } */}
                 </TableBody>
             </Table>
         </div>

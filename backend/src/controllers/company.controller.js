@@ -52,6 +52,7 @@ export const getCompany = async (req, res) => {
 export const getCompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
+    // console.log(companyId);
     const company = await Company.findById(companyId);
     if (!company) {
       return res.status(400).json({
@@ -71,12 +72,16 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { name, desc, website, location } = req.body;
-    console.log(name, desc, website, location, website);
+    console.log(name, desc, website, location);
+    // const file = req.file;
     const file = req.file;
-    const getFile = getDatauri(file);
-    const cloudRes = await cloudinary.uploader.upload(getFile.content);
-    const logo = cloudRes.secure_url;
-    const updateData = { name, desc, website, location, logo };
+    // console.log(file);
+    const fileUri = getDatauri(file);
+    // console.log(fileUri);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    const Logo = cloudResponse.secure_url;
+    console.log(Logo);
+    const updateData = { name, desc, website, location, Logo };
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
@@ -88,6 +93,7 @@ export const updateCompany = async (req, res) => {
     }
     return res.status(200).json({
       message: "Company information updated",
+      company,
       success: true,
     });
   } catch (error) {

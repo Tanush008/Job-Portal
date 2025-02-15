@@ -12,12 +12,13 @@ import { USER_API_END_POINT } from '../utils/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader2 } from 'lucide-react'
 import { setLoading } from '@/redux/authSlice'
+import { useEffect } from 'react'
 
 const SignUp = () => {
     const [input, setinput] = useState({
         fullname: "",
         email: "",
-        PhoneNumber: "",
+        phoneNumber: "",
         Password: "",
         file: "",
         role: ""
@@ -29,7 +30,7 @@ const SignUp = () => {
     const FileHandler = (e) => {
         setinput({ ...input, file: e.target.files?.[0] });
     }
-    const { loading } = useSelector(store => store.auth)
+    const { loading, user } = useSelector(store => store.auth)
     const dispatch = useDispatch();
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -37,7 +38,7 @@ const SignUp = () => {
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
         formData.append("password", input.Password);
-        formData.append("phoneNumber", input.PhoneNumber);
+        formData.append("phoneNumber", input.phoneNumber);
         formData.append("role", input.role);
         if (input.file) {
             formData.append("file", input.file);
@@ -52,8 +53,8 @@ const SignUp = () => {
             })
             if (res.data.success) {
                 navigate("/login");
-                toast.success(res.data.message);
-                toast.error(error.response.data.message);
+                // toast.success(res.data.message);
+                // toast.error(error.response.data.message);
             }
         } catch (error) {
             console.log(error);
@@ -62,6 +63,12 @@ const SignUp = () => {
             dispatch(setLoading(false));
         }
     }
+
+    useEffect(() => {
+        if (user) {
+            navigate("/");
+        }
+    }, [])
     return (
         <>
             <Navbar />
@@ -131,13 +138,13 @@ const SignUp = () => {
                                 <input
                                     type="radio"
                                     name="role"
-                                    id="recuriter"
-                                    value="recuriter"
-                                    checked={input.role === 'recuriter'}
+                                    id="recruiter"
+                                    value="recruiter"
+                                    checked={input.role === 'recruiter'}
                                     onChange={EventHandler}
                                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
                                 />
-                                <label htmlFor="recuriter" className="text-sm font-medium text-gray-700">Recruiter</label>
+                                <label htmlFor="recruiter" className="text-sm font-medium text-gray-700">Recruiter</label>
                             </div>
                             <div className="flex items-center space-x-3">
                                 <input
@@ -165,18 +172,9 @@ const SignUp = () => {
                             </div>
                         </RadioGroup>
 
-                        {loading ? (
-                            <button className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center">
-                                <Loader2 className="animate-spin mr-2" />Please Wait
-                            </button>
-                        ) : (
-                            <button
-                                type="submit"
-                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Sign Up
-                            </button>
-                        )}
+                        {
+                            loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Signup</Button>
+                        }
 
                         <p className="text-center text-sm text-gray-600">
                             Already have an Account?{' '}

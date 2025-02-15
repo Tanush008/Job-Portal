@@ -1,8 +1,11 @@
 import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { Badge } from './ui/badge'
+import { useSelector } from 'react-redux'
 
 const AppliedJobTable = () => {
+    const { allAppiledJobs } = useSelector(store => store.jobs)
+    console.log(allAppiledJobs);
     return (
         <>
             <Table>
@@ -17,12 +20,14 @@ const AppliedJobTable = () => {
                 </TableHeader>
                 <TableBody>
                     {
-                        <TableRow>
-                            <TableCell>12-02-2032</TableCell>
-                            <TableCell>Engineer</TableCell>
-                            <TableCell>Google</TableCell>
-                            <TableCell className="text-right"><Badge>Selected</Badge></TableCell>
-                        </TableRow>
+                        allAppiledJobs.length <= 0 ? <span>You haven't applied any job yet.</span> : allAppiledJobs.map((appliedJob) => (
+                            <TableRow key={allAppiledJobs._id}>
+                                <TableCell>{appliedJob?.createdAt?.split("T")[0]}</TableCell>
+                                <TableCell>{appliedJob.job?.title}</TableCell>
+                                <TableCell>{appliedJob.job?.company?.name}</TableCell>
+                                <TableCell className="text-right"><Badge className={`${appliedJob?.status === "rejected" ? 'bg-red-400' : appliedJob.status === 'pending' ? 'bg-gray-400' : 'bg-green-400'}`}>{appliedJob.status.toUpperCase()}</Badge></TableCell>
+                            </TableRow>
+                        ))
                     }
                 </TableBody>
             </Table >

@@ -26,7 +26,7 @@ const CompaniesTable = () => {
     return (
         <div className=''>
             <Table>
-                <TableCaption>A list of your recent fdfaa registered companies</TableCaption>
+                <TableCaption>A list of your recent registered companies</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>Logo</TableHead>

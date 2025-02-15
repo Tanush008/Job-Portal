@@ -8,7 +8,7 @@ import useGetAllJobs from '@/hooks/useGetAllJobs'
 const Home = () => {
     useGetAllJobs()
     return (
-        <div className=' text-white'>
+        <div className=' bg-black text-white'>
             <Navbar />
             <HomeSection />
             <CategoryCarousel />

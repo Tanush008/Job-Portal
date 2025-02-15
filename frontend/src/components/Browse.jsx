@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import JobCard from './JobsCard'
+// import JobCard from './JobsCard'
 import Navbar from './Navbar/Navbar'
 import useGetAllJobs from '@/hooks/useGetAllJobs';
 import { useDispatch, useSelector } from 'react-redux';
 import Jobs from './Jobs';
+import { setsearchedByQuery } from '@/redux/jobSlice';
 
 const Browse = () => {
     useGetAllJobs();
@@ -11,7 +12,7 @@ const Browse = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         return () => {
-            dispatch(setSearchedQuery(""));
+            dispatch(setsearchedByQuery(""));
         }
     }, [])
     return (

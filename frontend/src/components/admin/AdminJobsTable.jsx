@@ -25,7 +25,7 @@ const AdminJobsTable = () => {
         setFilterjobs(filteredjobs);
     }, [adminJobs, searchJobByText])
     return (
-        <div className='bg-green-600'>
+        <div >
             <Table>
                 <TableCaption>A list of your recent Jobs</TableCaption>
                 <TableHeader>
@@ -36,19 +36,19 @@ const AdminJobsTable = () => {
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody className='mt-10 bg-purple-500'>
+                <TableBody>
                     {
                         filterjobs?.map((job) => (
                             <tr >
                                 <TableCell>{job?.company?.name}</TableCell>
                                 <TableCell>{job?.title}</TableCell>
                                 <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
-                                <TableCell className="text-right cursor-pointer gap-30  bg-red-300">
+                                <TableCell className="text-right cursor-pointer gap-30 ">
                                     <Popover>
-                                        <PopoverTrigger className='mb-5'><MoreHorizontal  /></PopoverTrigger>
+                                        <PopoverTrigger className='mb-5'><MoreHorizontal /></PopoverTrigger>
                                         <PopoverContent className="w-32">
 
-                                            <div  onClick={() => navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2  w-fit cursor-pointer'>
+                                            <div onClick={() => navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2  w-fit cursor-pointer'>
                                                 <Edit2 className='w-4' />
                                                 <span>Edit</span>
                                             </div>

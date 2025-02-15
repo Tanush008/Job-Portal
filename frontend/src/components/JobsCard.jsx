@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from './ui/button'
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Bookmark } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Link, useNavigate } from 'react-router-dom'
+import { Avatar, AvatarImage } from './ui/avatar'
 
 const JobCard = ({ job }) => {
     const navigate = useNavigate();
@@ -13,9 +13,11 @@ const JobCard = ({ job }) => {
         const diff = currentDate - createdAt
         return Math.floor(diff / (1000 * 24 * 60 * 60))
     }
-    console.log(job._id);
+    // console.log(job._id);
 
     // const jobId = "rrereqwrq"
+    // console.log(job.company.Logo);
+
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100  transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-3 cursor-pointer'>
             <div className='flex items-center justify-between'>
@@ -25,7 +27,7 @@ const JobCard = ({ job }) => {
             <div className='flex items-center gap-2 my-2'>
                 <Button className='p-6' size='icon'>
                     <Avatar>
-                        <AvatarImage src={job?.company?.logo} />
+                        <AvatarImage src={job.company.Logo} />
                     </Avatar>
                 </Button>
                 <div>

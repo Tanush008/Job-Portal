@@ -3,12 +3,14 @@ import React, { useEffect } from 'react'
 import Navbar from './Navbar/Navbar'
 import useGetAllJobs from '@/hooks/useGetAllJobs';
 import { useDispatch, useSelector } from 'react-redux';
-import Jobs from './Jobs';
 import { setsearchedByQuery } from '@/redux/jobSlice';
+import JobCard from './JobsCard';
 
 const Browse = () => {
     useGetAllJobs();
     const { allJobs } = useSelector(store => store.jobs);
+    // console.log(allJobs);
+
     const dispatch = useDispatch();
     useEffect(() => {
         return () => {
@@ -24,15 +26,23 @@ const Browse = () => {
                     {
                         allJobs.map((job) => {
                             return (
-                                <Jobs key={job._id} job={job} />
+                                <JobCard
+                                    key={job._id} job={job} />
                             )
                         })
                     }
                 </div>
-
             </div>
         </div>
-
     )
 }
 export default Browse
+// {
+//     allJobs.map((job, index) => (
+//         <div key={index} className='job-card'>
+//             <h2>{job.title}</h2>
+//             <p>{job.description}</p>
+//             {/* Add more job details as needed */}
+//         </div>
+//     ))
+// }

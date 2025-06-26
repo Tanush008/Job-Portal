@@ -3,80 +3,43 @@
   padding: 0;
   box-sizing: border-box;
 }
-.Home_container{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* background-color: green; */
-    margin-top: 30px;
-    position: relative;
-    top:0;
-    /* width: 150%; */
+body {
+  width: 100%;
+  height: 100%;
 }
-.Home_main h2{
-font-size: 60px;
-line-height: 50px;
-}
-.Home_main h3{
-    margin-top: 9px;
-}
-.Home_main span{
-    color: purple;
-    font-weight: 800;
-}
-.Home_heading {
-  color: red;
-  background-color: beige;
-  margin: auto;
- width: fit-content; 
-  border-radius: 40px;
-  padding-left: 12px;
-  padding-right: 12px;
-  font-size: 28px;
-}
-.Home_main {
-  color: red;
-  /* background-color: beige; */
-  margin-top: 30px;
-  /* text-align: center; */
-  font-size: 40px;
-  /* position: relative; */
-  /* top: 0;
-  left: 29%; */
-}
-.Home_para {
-  /* text-align: center; */
-  color: red;
-  font-size: 18px;
-  font-weight: 700;
-  margin-top: 14Npx;
-}
-.Home_buttons{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-    margin-top: 20px;
-}
-.Home_search {
-  width: 500px;
-  font-size: 24px;
-  border-radius: 90px;
-  padding-left: 10px;
-  /* margin-top: 20px; */
-}
-.Home_job {
-  /* text-align: center; */
-}
-.Home_button{
-  border-radius: 10px;
-  background-color: red;
-  width: 5;
-  height: 5;
-  cursor: pointer;
-}
+/* .Home_container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color: green; */
+/* margin-top: 30px;
+  position: relative;
+  /*  */
 
-
-
+.container {
+  min-height: 100vh; 
+  min-width: 100vw;
+  width: 100vw;
+  height: 570px;
+  position: relative;
+  background-image: url("src/assets/template.jpg");
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: max(1200px, 100vw);
+}
+.box{
+  width: 100%;
+  opacity: 0.6;
+  height: 100%;
+  background-color: black;
+  position: absolute;
+  /* z-index: 9999; */
+}
+.navbar{
+  font-weight: 500;
+  position: relative;
+  color: white;
+}

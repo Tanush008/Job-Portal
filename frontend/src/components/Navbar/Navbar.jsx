@@ -35,20 +35,19 @@ const Navbar = () => {
     return (
         <>
             <main>
-                <div className='heading navbar h-[100px] flex items-center justify-between bg-black text-white px-[10px]'>
-                    <h1 className='text-xl'>Job<span className='text-blue-600 '>Portal</span></h1>
+                <div className='heading navbar py-5 flex items-center justify-between  text-black px-[10px] border-b-2 border-black'>
+                    <h1 className='text-[1.5rem]'>Job<span className='text-blue-600 '>Portal</span></h1>
                     <ul className='flex gap-20 text-[22px] font-semibold'>
                         {user?.role === 'recruiter' ? (
                             <>
-                                <Link to='/admin/companies'>Companies</Link>
-                                <Link to='/admin/jobs'>Jobs</Link>
+                                <Link to='/admin/companies' className="hover:text-blue-500 transition-colors duration-300">Companies</Link>
+                                <Link to='/admin/jobs' className="hover:text-blue-500 transition-colors duration-300">Jobs</Link>
                             </>
                         ) : (
                             <>
-
-                                <Link to={'/'}>Home</Link>
-                                <Link to={'/jobs'}>Jobs</Link >
-                                <Link to={'/browse'}>Browse</Link>
+                                <Link to={'/'} className="hover:text-blue-500 hover:scale-110 transition-all duration-300">Home</Link>
+                                <Link to={'/jobs'} className="hover:text-blue-500  hover:scale-110 transition-colors duration-300">Jobs</Link>
+                                <Link to={'/browse'} className="hover:text-blue-500  hover:scale-110 transition-colors duration-300">Browse</Link>
                             </>
                         )
                         }

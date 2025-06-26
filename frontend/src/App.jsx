@@ -8,7 +8,6 @@ import Jobs from './components/Jobs'
 import Browse from './components/Browse'
 import Profile from './components/Profile'
 import JobsDesription from './components/JobsDesription'
-import Logout from './components/Logout'
 import Companies from './components/admin/Companies'
 import CreateCompanies from './components/admin/CreateCompanies'
 import CompanySetup from './components/admin/CompanySetup'
@@ -47,10 +46,10 @@ function App() {
       element: <Profile />
 
     },
-    {
-      path: '/logout',
-      element: <Logout />
-    },
+    // {
+    //   path: '/logout',
+    //   element: <Logout />
+    // },
     // for admin
     {
       path: 'admin/companies',

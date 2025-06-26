@@ -109,11 +109,11 @@ export const login = async (req, res) => {
 
 // Logout
 export const Logout = async (req, res) => {
-  try {
-    return res.status(200).cookie("token", { maxAge: 0 }).json({
-      message: "Logut successfully",
-      success: true,
-    });
+    try {
+      return res.status(200).cookie("token", { maxAge: 0 }).json({
+        message: "Logut successfully",
+        success: true,
+      });
   } catch (error) {
     console.log(error);
   }
@@ -121,7 +121,7 @@ export const Logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    console.log(fullname, email, phoneNumber, bio, skills);
+    // console.log(fullname, email, phoneNumber, bio, skills);
     // console.log("ffjadkfaj;ad");
     const file = req.file;
     const fileUri = getDatauri(file);

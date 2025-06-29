@@ -88,7 +88,7 @@ export const login = async (req, res) => {
       email: user.email,
       password: user.password,
       profile: user.profile,
-      role: user.role,
+      role: user.role, 
     };
     return res
       .status(200)

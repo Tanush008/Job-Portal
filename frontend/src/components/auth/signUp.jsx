@@ -1,8 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from '../Navbar/Navbar'
-import { Label } from '@radix-ui/react-label'
-import { Input } from '../ui/input'
-// import './signUp.css'
 import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
@@ -71,12 +67,10 @@ const SignUp = () => {
     }, [])
     return (
         <>
-            <Navbar />
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <form className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg" onSubmit={submitHandler}>
-                    <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Sign Up</h1>
-
-                    <div className="space-y-6">
+           
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+                <form className="max-w-md w-full space-y-6 bg-white p-8 rounded-xl shadow-lg relative z-10" onSubmit={submitHandler}>
+                    <div className="space-y-2">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
                             <input
@@ -173,15 +167,16 @@ const SignUp = () => {
                         </RadioGroup>
 
                         {
-                            loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Signup</Button>
+                            loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> :
+                                <button
+                                    type="submit"
+                                    className="w-80 my-4 bg-teal-400 text-white font-bold rounded-full py-3 text-lg shadow-md hover:bg-teal-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2"
+                                >
+                                    SIGN UP
+                                </button>
                         }
 
-                        <p className="text-center text-sm text-gray-600">
-                            Already have an Account?{' '}
-                            <Link className="font-medium text-indigo-600 hover:text-indigo-500" to="/login">
-                                Login
-                            </Link>
-                        </p>
+
                     </div>
                 </form>
             </div>

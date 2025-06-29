@@ -23,6 +23,7 @@ const category = ['Software Engineer', 'Backend Developer', 'FrontEnd Developer'
     'Graphic Designer', 'Data Science']
 const HomeSection = () => {
     const [query, setQuery] = useState("")
+    const [hideContent, setHideContent] = useState(false);
     const { user } = useSelector(store => store.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -43,12 +44,12 @@ const HomeSection = () => {
     // }
     return (
         <>
-            <body>
-                <div className="container">
+            <body >
+                <div className="container ">
                     <div className="box"></div>
-                    <div className='heading navbar px-[80px] pt-[40px] py-[10px] flex items-center justify-between '>
+                    <div className='heading flex navbar px-[80px] pt-[40px] py-[10px]  '>
                         <h1 className='text-[2.2rem]'>Job<span className='text-blue-600'>Portal</span></h1>
-                        <ul className='flex gap-20 text-[22px] font-semibold'>
+                        <ul className=' flex gap-20 text-[22px] font-semibold'>
                             {user?.role === 'recruiter' ? (
                                 <>
                                     <Link to='/admin/companies' className="hover:text-blue-500 transition-colors duration-300">Companies</Link>
@@ -66,7 +67,7 @@ const HomeSection = () => {
                         {
                             !user ? (
                                 <div className="log flex gap-10 items-center">
-                                    <Link to="/login"><Button >Login</Button></Link>
+                                    <Link to="/next/login"><Button>Login</Button></Link>
                                     <Link to="/signUp"><Button>SignIn</Button></Link>
                                 </div>
                             ) : (
@@ -105,7 +106,13 @@ const HomeSection = () => {
                             )
                         }
                     </div>
+                    <div className=' content flex items-center justify-center '>
+                        <div className='text-center'>
+                            <h2 className='mb-[10px] text-[2.8rem] text-white w-full font-semibold'>The Easiest Way To Get Your Dream Job</h2>
+                            <p className='text-[1.1rem] text-gray-300'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
 
+                        </div>
+                    </div>
                     <div>
                         <Carousel className='w-full max-w-xl mx-auto my-20 text-red-400'>
 

@@ -1,9 +1,8 @@
 // import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-// import './App.css'
 import Login from './components/auth/Login'
 import Home from './components/Home/Home'
-import SignUp from './components/auth/signUp'
+// import SignUp from './components/auth/signUp'
 import Jobs from './components/Jobs'
 import Browse from './components/Browse'
 import Profile from './components/Profile'
@@ -12,9 +11,10 @@ import Companies from './components/admin/Companies'
 import CreateCompanies from './components/admin/CreateCompanies'
 import CompanySetup from './components/admin/CompanySetup'
 import AdminJobs from './components/admin/adminJobs'
-// import { PostAdd } from '@mui/icons-material/'
 import PostJobs from './components/admin/PostJobs'
 import Applicants from './components/admin/Applicants'
+// import AuthTransition from './components/auth/AuthTransition'
+import Auth from './components/auth/Auth'
 function App() {
   const appRouter = createBrowserRouter([
     {
@@ -22,12 +22,12 @@ function App() {
       element: <Home />
     },
     {
-      path: '/login',
+      path: '/next/login',
       element: <Login />
     },
     {
       path: '/signup',
-      element: <SignUp />
+      element: <Auth />
     },
     {
       path: '/jobs',

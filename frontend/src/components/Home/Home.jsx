@@ -5,15 +5,14 @@ import CategoryCarousel from '../CategoryCarousel/CategoryCarousel'
 import LatesJobs from '../LatesJobs'
 import Footer from '../Footer'
 import useGetAllJobs from '@/hooks/useGetAllJobs'
+import './Home.css';
 const Home = () => {
     useGetAllJobs()
     return (
-        <div className=' bg-white text-black'>
-            {/* <Navbar /> */}
+        <div className="home">
             <HomeSection />
-             {/* <CategoryCarousel /> */}
-            {/* <LatesJobs />
-            <Footer /> */}
+            <LatesJobs />
+            <Footer />
         </div>
     )
 }

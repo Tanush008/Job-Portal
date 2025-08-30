@@ -1,5 +1,5 @@
 // import { MoreHorizontal, Table } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 // import { Popover } from '@mui/material';
@@ -19,12 +19,11 @@ const CompaniesTable = () => {
                 return true
             };
             return company?.name?.toLowerCase().includes(searchCompanyByText.toLowerCase());
-
         });
         setFilterCompany(filteredCompany);
     }, [companies, searchCompanyByText])
     return (
-        <div className=''>
+        <div className='w-full h-full p-5'>
             <Table>
                 <TableCaption>A list of your recent registered companies</TableCaption>
                 <TableHeader>
@@ -38,7 +37,7 @@ const CompaniesTable = () => {
                 <TableBody>
                     {
                         filterCompany?.map((company) => (
-                            <tr>
+                            <tr key={company._id}>
                                 <TableCell>
                                     <Avatar>
                                         <AvatarImage src={company.Logo} />

@@ -1,4 +1,4 @@
-import React, { useDebugValue, useEffect, useState } from 'react'
+import {  useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button';
 import { useParams } from 'react-router-dom';
@@ -31,7 +31,6 @@ const JobsDesription = () => {
             }
         } catch (error) {
             console.log(error);
-
         }
     }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Navbar from './Navbar/Navbar';
 import { Avatar, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
@@ -11,13 +11,14 @@ import { useSelector } from 'react-redux';
 import store from '@/redux/store';
 import useGetAppliedJobs from '@/hooks/useGetAppliedJobs';
 
-// const skills = ["Html", "Css", "Javascript", "Reactjs"]
 const isResume = true;
 
 const Profile = () => {
     useGetAppliedJobs();
     const [open, setOpen] = useState(false)
     const { user } = useSelector(store => store.auth)
+    // console.log(user.profile.profilePhoto);
+    
     return (
         <div>
             {!user ? (
@@ -30,7 +31,7 @@ const Profile = () => {
                             <div className='flex items-center gap-4'>
                                 <Avatar className="h-24 w-24">
                                     <AvatarImage src={user?.profile?.profilePhoto} alt="profile" />
-                                </Avatar>
+                                </Avatar>   
                                 <div>
                                     <h1 className='font-medium text-xl'>{user?.fullname}</h1>
                                     <p>{user?.profile?.bio || "No bio added"}</p>

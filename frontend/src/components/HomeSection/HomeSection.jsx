@@ -1,32 +1,37 @@
-import React, { useState } from 'react'
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
+import  { useState } from 'react'
+import { Avatar } from '@radix-ui/react-avatar'
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Button } from '../ui/button'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import store from '@/redux/store'
 import { USER_API_END_POINT } from '../utils/constant'
 import axios from 'axios'
 import { setUser } from '@/redux/authSlice'
 import './HomeSection.css';
-// import { Button } from '../ui/button';
-import { Search } from 'lucide-react';
+import { FaLock, FaUserTie, FaLaptopCode, FaDatabase, FaChartLine, FaCode } from "react-icons/fa6";
 import { Carousel, CarouselNext, CarouselPrevious } from '../ui/carousel'
 import { CarouselItem } from '../ui/carousel'
 import { CarouselContent } from '../ui/carousel'
 import { setsearchedByQuery } from '@/redux/jobSlice';
-const category = ['Software Engineer', 'Backend Developer', 'FrontEnd Developer',
-    'Graphic Designer', 'Data Science']
+
+const category = [
+    { name: 'Software Engineer', icon: <FaLaptopCode /> },
+    { name: 'Backend Developer', icon: <FaDatabase /> },
+    { name: 'FrontEnd Developer', icon: <FaCode /> },
+    { name: 'Graphic Designer' },
+    { name: 'Data Science', icon: <FaChartLine /> }
+];
+
 const HomeSection = () => {
     const [query, setQuery] = useState("")
-    const [hideContent, setHideContent] = useState(false);
     const { user } = useSelector(store => store.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate();
+
     const LogoutButton = async () => {
         try {
             const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true })
@@ -38,54 +43,62 @@ const HomeSection = () => {
             console.log(error);
         }
     }
-    // const searchJobHandler = () => {
-    //     dispatch(setsearchedByQuery(query))
-    //     navigate("/browse")
-    // }
+
+    const searchJobHandler = (catg) => {
+        dispatch(setsearchedByQuery(catg))
+        navigate("/browse")
+    }
+
     return (
         <>
-            <body >
-                <div className="container ">
-                    <div className="box"></div>
-                    <div className='heading flex navbar px-[80px] pt-[40px] py-[10px]  '>
-                        <h1 className='text-[2.2rem]'>Job<span className='text-blue-600'>Portal</span></h1>
-                        <ul className=' flex gap-20 text-[22px] font-semibold'>
+            <body>
+                <div className="container">
+                    <div className="boxs"></div>
+                    <div className='heading flex navbar px-[80px] pt-[40px] py-[10px] justify-between items-center'>
+                        <h1 className='text-[2.2rem] flex items-center gap-2'>
+                            <FaUserTie className="text-[#97d700] text-4xl" />
+                            JobPortal
+                        </h1>
+                        <ul className='flex gap-20 text-[20px] font-semibold'>
                             {user?.role === 'recruiter' ? (
                                 <>
-                                    <Link to='/admin/companies' className="hover:text-blue-500 transition-colors duration-300">Companies</Link>
-                                    <Link to='/admin/jobs' className="hover:text-blue-500 transition-colors duration-300">Jobs</Link>
+                                    <Link to='/admin/companies'>Companies</Link>
+                                    <Link to='/admin/jobs'>Jobs</Link>
                                 </>
                             ) : (
                                 <>
-                                    <Link to={'/'} className="hover:text-blue-500 hover:scale-110 transition-all duration-300">Home</Link>
-                                    <Link to={'/jobs'} className="hover:text-blue-500  hover:scale-110 transition-colors duration-300">Jobs</Link>
-                                    <Link to={'/browse'} className="hover:text-blue-500  hover:scale-110 transition-colors duration-300">Browse</Link>
+                                    <Link to={'/'}>Home</Link>
+                                    <Link to={'/jobs'}>Jobs</Link>
+                                    <Link to={'/browse'}>Browse</Link>
                                 </>
-                            )
-                            }
+                            )}
                         </ul>
                         {
                             !user ? (
                                 <div className="log flex gap-10 items-center">
-                                    <Link to="/next/login"><Button>Login</Button></Link>
-                                    <Link to="/signUp"><Button>SignIn</Button></Link>
+                                    <Link to="/next/login">
+                                        <button className="flex items-center gap-2 bg-[#97d700] hover:bg-[#7bb900] text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-200">
+                                            <FaLock />
+                                            Log In
+                                        </button>
+                                    </Link>
                                 </div>
                             ) : (
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Avatar className='px-2'>
+                                        <Avatar className='avatar px-2'>
                                             <img
-                                                className='size-9 rounded-md'
+                                                className='size-9 rounded-full'
                                                 src={user?.profile?.profilePhoto || 'https://github.com/shadcn.png'}
                                                 alt="@shadcn"
                                             />
                                         </Avatar>
                                     </PopoverTrigger>
                                     <PopoverContent>
-                                        <div class="box">
-                                            <div className="side-content">
-                                                <Avatar class="mini-img">
-                                                    <img className='size-10 rounded-md' src={user?.profile?.profilePhoto} />
+                                        <div className="box">
+                                            <div className="side-content flex items-center gap-3">
+                                                <Avatar>
+                                                    <img className='size-10 rounded-full' src={user?.profile?.profilePhoto} />
                                                 </Avatar>
                                                 <div className="text-content">
                                                     <h4>{user?.fullname}</h4>
@@ -106,27 +119,33 @@ const HomeSection = () => {
                             )
                         }
                     </div>
-                    <div className=' content flex items-center justify-center '>
+                    <div className='content flex flex-col items-center justify-center mt-12'>
                         <div className='text-center'>
-                            <h2 className='mb-[10px] text-[2.8rem] text-white w-full font-semibold'>The Easiest Way To Get Your Dream Job</h2>
-                            <p className='text-[1.1rem] text-gray-300'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate est, consequuntur perferendis.</p>
-
+                            <h2 className='mb-[10px] text-[3.2rem] text-white w-full font-extrabold'>The Easiest Way To Get Your Dream Job</h2>
+                            <p className='text-[1.1rem] text-gray-300 mb-8'>Find your next opportunity with top companies. Discover jobs tailored for you.</p>
+                            <Button className="get-started-btn" onClick={() => navigate('/jobs')}>Get Started</Button>
                         </div>
                     </div>
                     <div>
-                        <Carousel className='w-full max-w-xl mx-auto my-20 text-red-400'>
-
-                            <CarouselContent  >
+                        <Carousel className='carousel w-full max-w-xl mx-auto my-20 text-white'>
+                            <CarouselContent>
                                 {
                                     category.map((catg, index) => (
-                                        <CarouselItem className='md:basis-1/2 lg-basis-1/3'>
-                                            <Button onClick={() => searchJobHandler(catg)} className='rounded-full' variant="outline">{catg}</Button>
+                                        <CarouselItem className='md:basis-1/2 lg-basis-1/3' key={catg.name}>
+                                            <Button
+                                                onClick={() => searchJobHandler(catg.name)}
+                                                className='rounded-full flex items-center gap-2'
+                                                variant="outline"
+                                            >
+                                                {catg.icon}
+                                                {catg.name}
+                                            </Button>
                                         </CarouselItem>
                                     ))
                                 }
                             </CarouselContent>
-                            <CarouselPrevious />
-                            <CarouselNext />
+                            <CarouselPrevious className="carousel-arrow" />
+                            <CarouselNext className="carousel-arrow" />
                         </Carousel>
                     </div>
                 </div>
@@ -134,4 +153,4 @@ const HomeSection = () => {
         </>
     )
 }
-export default HomeSection      
+export default HomeSection

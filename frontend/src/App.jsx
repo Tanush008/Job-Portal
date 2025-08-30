@@ -76,6 +76,10 @@ function App() {
       path: '/admin/jobs/:id/applicants',
       element: <Applicants />
     },
+    {
+      path: '/admin/jobs/:id',
+      element: <PostJobs />
+    },
   ])
   return (
     <>

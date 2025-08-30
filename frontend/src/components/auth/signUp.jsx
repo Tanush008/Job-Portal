@@ -67,7 +67,7 @@ const SignUp = () => {
     }, [])
     return (
         <>
-           
+
             <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
                 <form className="max-w-md w-full space-y-6 bg-white p-8 rounded-xl shadow-lg relative z-10" onSubmit={submitHandler}>
                     <div className="space-y-2">
@@ -170,13 +170,10 @@ const SignUp = () => {
                             loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> :
                                 <button
                                     type="submit"
-                                    className="w-80 my-4 bg-teal-400 text-white font-bold rounded-full py-3 text-lg shadow-md hover:bg-teal-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2"
-                                >
+                                    className="w-80 my-4 bg-teal-400 text-white font-bold rounded-full py-3 text-lg shadow-md hover:bg-teal-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2">
                                     SIGN UP
                                 </button>
                         }
-
-
                     </div>
                 </form>
             </div>

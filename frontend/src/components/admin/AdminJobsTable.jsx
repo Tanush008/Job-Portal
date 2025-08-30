@@ -1,11 +1,10 @@
+/* eslint-disable react/jsx-key */
 // import { MoreHorizontal, Table } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 // import { Popover } from '@mui/material';
 import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
-import { Avatar } from '@radix-ui/react-avatar';
-import { AvatarImage } from '../ui/avatar';
 import { Popover } from '../ui/popover';
 import { Edit2, Eye, MoreHorizontal } from 'lucide-react';
 import { useSelector } from 'react-redux';
@@ -25,7 +24,7 @@ const AdminJobsTable = () => {
         setFilterjobs(filteredjobs);
     }, [adminJobs, searchJobByText])
     return (
-        <div >
+        <div className='w-full h-full p-5'>
             <Table>
                 <TableCaption>A list of your recent Jobs</TableCaption>
                 <TableHeader>
@@ -47,8 +46,7 @@ const AdminJobsTable = () => {
                                     <Popover>
                                         <PopoverTrigger className='mb-5'><MoreHorizontal /></PopoverTrigger>
                                         <PopoverContent className="w-32">
-
-                                            <div onClick={() => navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2  w-fit cursor-pointer'>
+                                            <div onClick={() => navigate(`/admin/jobs/${job._id}`)} className='flex items-center gap-2  w-fit cursor-pointer'>
                                                 <Edit2 className='w-4' />
                                                 <span>Edit</span>
                                             </div>

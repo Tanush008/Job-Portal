@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 const useGetAllSingleCompany = (companyId) => {
-    console.log(companyId);
+    // console.log(companyId+" from custom hook");
     const dispatch = useDispatch()
     useEffect(() => {
         const fetchAllCompany = async () => {

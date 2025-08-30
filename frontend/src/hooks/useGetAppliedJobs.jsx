@@ -1,4 +1,4 @@
-import { APPLICANT_END_POINT, JOB_API_END_POINT } from '@/components/utils/constant'
+import { APPLICANT_END_POINT } from '@/components/utils/constant'
 import { setAppliedJobs } from '@/redux/jobSlice'
 import axios from 'axios'
 import { useEffect } from 'react'

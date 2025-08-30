@@ -8,7 +8,7 @@ import {
 import isAuthenticated from "../middlewares/user.middleware.js";
 import {
   // handleMulterError,
-  singleUpload,
+  singleUpload, 
 } from "../middlewares/multer.middleware.js";
 const router = express.Router();
 router.route("/register").post(singleUpload, register);

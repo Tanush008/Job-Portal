@@ -35,8 +35,8 @@ const Navbar = () => {
     return (
         <>
             <main>
-                <div className='heading navbar py-5 flex items-center justify-between  text-black px-[10px] border-b-2 border-black'>
-                    <h1 className='text-[1.5rem]'>Job<span className='text-blue-600 '>Portal</span></h1>
+                <div className='heading navbar py-5  flex items-center justify-between  text-black px-10 border-b-2 border-black'>
+                    <h1 className='text-[1.5rem]'>JobPortal</h1>
                     <ul className='flex gap-20 text-[22px] font-semibold'>
                         {user?.role === 'recruiter' ? (
                             <>

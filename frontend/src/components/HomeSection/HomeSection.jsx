@@ -1,4 +1,4 @@
-import  { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar } from '@radix-ui/react-avatar'
 import {
     Popover,
@@ -12,74 +12,64 @@ import { USER_API_END_POINT } from '../utils/constant'
 import axios from 'axios'
 import { setUser } from '@/redux/authSlice'
 import './HomeSection.css';
-import { FaLock, FaUserTie, FaLaptopCode, FaDatabase, FaChartLine, FaCode } from "react-icons/fa6";
-import { Carousel, CarouselNext, CarouselPrevious } from '../ui/carousel'
-import { CarouselItem } from '../ui/carousel'
-import { CarouselContent } from '../ui/carousel'
 import { setsearchedByQuery } from '@/redux/jobSlice';
-
-const category = [
-    { name: 'Software Engineer', icon: <FaLaptopCode /> },
-    { name: 'Backend Developer', icon: <FaDatabase /> },
-    { name: 'FrontEnd Developer', icon: <FaCode /> },
-    { name: 'Graphic Designer' },
-    { name: 'Data Science', icon: <FaChartLine /> }
-];
+import useGetAllJobs from '@/hooks/useGetAllJobs'
 
 const HomeSection = () => {
-    const [query, setQuery] = useState("")
+    useGetAllJobs()
     const { user } = useSelector(store => store.auth)
+    // console.log(user);
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const { searchedByQuery, allJobs } = useSelector(store => store.jobs)
+    // console.log(allJobs);
+    const [searchInput, setSearchInput] = useState(searchedByQuery || "")
 
     const LogoutButton = async () => {
         try {
             const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true })
             if (res.data.success) {
                 dispatch(setUser(null))
-                navigate("/ ")
+                navigate("/")
             }
         } catch (error) {
             console.log(error);
         }
     }
 
-    const searchJobHandler = (catg) => {
-        dispatch(setsearchedByQuery(catg))
-        navigate("/browse")
+    // Filter jobs based on search input
+    const filteredJobs = allJobs?.filter(job =>
+        job.title?.toLowerCase().includes(searchInput.toLowerCase()) ||
+        job.companyName?.toLowerCase().includes(searchInput.toLowerCase())
+    ) || []
+    const searchJobHandler = (e) => {
+        e.preventDefault();
+        dispatch(setsearchedByQuery(searchInput))
+        // Optionally, navigate to a jobs page
+        // navigate("/browse")
     }
+    useEffect(() => {
+        return () => {
+            dispatch(setsearchedByQuery(""));
+        }
+    }, [])
 
     return (
         <>
-            <body>
-                <div className="container">
-                    <div className="boxs"></div>
-                    <div className='heading flex navbar px-[80px] pt-[40px] py-[10px] justify-between items-center'>
-                        <h1 className='text-[2.2rem] flex items-center gap-2'>
-                            <FaUserTie className="text-[#97d700] text-4xl" />
-                            JobPortal
-                        </h1>
-                        <ul className='flex gap-20 text-[20px] font-semibold'>
-                            {user?.role === 'recruiter' ? (
-                                <>
-                                    <Link to='/admin/companies'>Companies</Link>
-                                    <Link to='/admin/jobs'>Jobs</Link>
-                                </>
-                            ) : (
-                                <>
-                                    <Link to={'/'}>Home</Link>
-                                    <Link to={'/jobs'}>Jobs</Link>
-                                    <Link to={'/browse'}>Browse</Link>
-                                </>
-                            )}
-                        </ul>
+            <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+                {/* Header */}
+                <header className="w-full flex justify-between items-center px-8 py-4 bg-white shadow-md">
+                    <Link to="/">
+                        <h1 className="text-xl font-bold text-blue-600">JobConnect</h1>
+                    </Link>
+                    <nav className="flex items-center gap-4">
+                        <Link to={'/browse'}>Browse</Link>
                         {
                             !user ? (
                                 <div className="log flex gap-10 items-center">
                                     <Link to="/next/login">
-                                        <button className="flex items-center gap-2 bg-[#97d700] hover:bg-[#7bb900] text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-200">
-                                            <FaLock />
-                                            Log In
+                                        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                            Sign In
                                         </button>
                                     </Link>
                                 </div>
@@ -89,7 +79,7 @@ const HomeSection = () => {
                                         <Avatar className='avatar px-2'>
                                             <img
                                                 className='size-9 rounded-full'
-                                                src={user?.profile?.profilePhoto || 'https://github.com/shadcn.png'}
+                                                src={user?.profile?.profilePhoto || 'https://placehold.co/100x100'}
                                                 alt="@shadcn"
                                             />
                                         </Avatar>
@@ -118,38 +108,76 @@ const HomeSection = () => {
                                 </Popover>
                             )
                         }
-                    </div>
-                    <div className='content flex flex-col items-center justify-center mt-12'>
-                        <div className='text-center'>
-                            <h2 className='mb-[10px] text-[3.2rem] text-white w-full font-extrabold'>The Easiest Way To Get Your Dream Job</h2>
-                            <p className='text-[1.1rem] text-gray-300 mb-8'>Find your next opportunity with top companies. Discover jobs tailored for you.</p>
-                            <Button className="get-started-btn" onClick={() => navigate('/jobs')}>Get Started</Button>
+                    </nav>
+                </header>
+                {/* Search Section */}
+                <div className="mt-10 w-full max-w-4xl text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6">Search for jobs...</h2>
+                    <form onSubmit={searchJobHandler}>
+                        <div className="flex items-center justify-center gap-4">
                         </div>
-                    </div>
-                    <div>
-                        <Carousel className='carousel w-full max-w-xl mx-auto my-20 text-white'>
-                            <CarouselContent>
-                                {
-                                    category.map((catg, index) => (
-                                        <CarouselItem className='md:basis-1/2 lg-basis-1/3' key={catg.name}>
-                                            <Button
-                                                onClick={() => searchJobHandler(catg.name)}
-                                                className='rounded-full flex items-center gap-2'
-                                                variant="outline"
-                                            >
-                                                {catg.icon}
-                                                {catg.name}
-                                            </Button>
-                                        </CarouselItem>
-                                    ))
-                                }
-                            </CarouselContent>
-                            <CarouselPrevious className="carousel-arrow" />
-                            <CarouselNext className="carousel-arrow" />
-                        </Carousel>
+                        <input
+                            type="text"
+                            placeholder="Search for jobs..."
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            className="w-full max-w-lg px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                            Find Jobs
+                        </button>
+                    </form>
+                    {/* Show filtered jobs or no job found */}
+                    <div className="mt-8">
+                        {searchInput && (
+                            filteredJobs.length > 0 ? (
+                                <div className="grid grid-cols-1 gap-4">
+                                    {filteredJobs.map(job => (
+                                        <div key={job._id} className="bg-white p-4 rounded shadow flex flex-col items-start">
+                                            <span className="font-bold text-lg">{job.title}</span>
+                                            <span className="text-gray-600">{job.companyName}</span>
+                                            <span className="text-gray-500 text-sm">{job.location}</span>
+                                            <Link to={`/job/descrption/${job._id}`} className="mt-2 text-blue-600 hover:underline">View Details</Link>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-red-500 font-semibold">No job found</div>
+                            )
+                        )}
                     </div>
                 </div>
-            </body>
+
+                {/* Job Categories */}
+                <div className="mt-10 w-full max-w-4xl">
+                    <h3 className="text-xl font-bold text-gray-800 mb-6">Job Categories</h3>
+                    <div className="grid grid-cols-4 gap-4">
+                        {[
+                            "Software Development",
+                            "Marketing",
+                            "Finance",
+                            "Healthcare",
+                            "Neolists",
+                            "Spouse",
+                            "Codeops",
+                            "Section",
+                            "Wolus",
+                            "Totems",
+                        ].map((category, index) => (
+                            <div
+                                key={index}
+                                className="flex flex-col items-center justify-center p-4 bg-white rounded-md shadow-md hover:shadow-lg transition"
+                            >
+                                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    {/* Placeholder for icons */}
+                                    <span className="text-blue-600 font-bold text-lg">{category[0]}</span>
+                                </div>
+                                <p className="mt-2 text-gray-600 text-sm">{category}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div >
         </>
     )
 }

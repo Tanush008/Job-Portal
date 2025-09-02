@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
 import { Circle } from "lucide-react"
@@ -14,12 +15,12 @@ const RadioGroupItem = React.forwardRef(({ className, ...props }, ref) => {
     (<RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-4 w-4 rounded-full border border-neutral-200 border-neutral-900 text-neutral-900 ring-offset-white focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:border-neutral-50 dark:text-neutral-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300",
+        "aspect-square h-4 w-4 rounded-full border bg-red-500  ring-offset-white focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50  dark:border-neutral-50 dark:text-neutral-50 dark:ring-offset-neutral-950",
         className
       )}
       {...props}>
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-2.5 w-2.5 fill-current text-current" />
+        <Circle className="h-3.5 w-3.5 fill-current text-current bg-zinc-300 justify-center " />
+      <RadioGroupPrimitive.Indicator className="flex items-center ">
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>)
   );

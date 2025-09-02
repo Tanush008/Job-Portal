@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">JobPortal</h3>
+            <h3 className="text-xl font-bold">JobConnect</h3>
             <p className="text-gray-400 text-sm">
               Connecting talented professionals with their dream careers.
             </p>
@@ -53,7 +53,7 @@ const Footer = () => {
             <div className="space-y-2 text-gray-400">
               <p className="flex items-center hover:text-white transition-colors duration-300">
                 <i className="fas fa-envelope mr-2"></i>
-                support@jobportal.com
+                support@JobConnect.com
               </p>
               <p className="flex items-center hover:text-white transition-colors duration-300">
                 <i className="fas fa-phone mr-2"></i>
@@ -71,7 +71,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-400">
-              © 2024 JobPortal. All rights reserved.
+              © 2024 JobConnect. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a>

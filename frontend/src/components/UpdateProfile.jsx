@@ -233,6 +233,6 @@ const UpdateProfile = ({ open, setOpen }) => {
             </DialogContent>
         </Dialog>
     );
-};
+};  
 
 export default UpdateProfile;

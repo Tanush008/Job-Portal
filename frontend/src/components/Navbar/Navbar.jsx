@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
+import { Avatar } from '@radix-ui/react-avatar'
 // import './Navbar.css'
 import {
     Popover,
@@ -6,7 +6,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Button } from '../ui/button'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import store from '@/redux/store'
 import { USER_API_END_POINT } from '../utils/constant'
@@ -35,45 +35,40 @@ const Navbar = () => {
     return (
         <>
             <main>
-                <div className='heading navbar py-5  flex items-center justify-between  text-black px-10 border-b-2 border-black'>
-                    <h1 className='text-[1.5rem]'>JobPortal</h1>
-                    <ul className='flex gap-20 text-[22px] font-semibold'>
-                        {user?.role === 'recruiter' ? (
-                            <>
-                                <Link to='/admin/companies' className="hover:text-blue-500 transition-colors duration-300">Companies</Link>
-                                <Link to='/admin/jobs' className="hover:text-blue-500 transition-colors duration-300">Jobs</Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link to={'/'} className="hover:text-blue-500 hover:scale-110 transition-all duration-300">Home</Link>
-                                <Link to={'/jobs'} className="hover:text-blue-500  hover:scale-110 transition-colors duration-300">Jobs</Link>
-                                <Link to={'/browse'} className="hover:text-blue-500  hover:scale-110 transition-colors duration-300">Browse</Link>
-                            </>
-                        )
-                        }
-                    </ul>
-                    {
-                        !user ? (
+                <header className="fixed top-0 left-0 w-full flex justify-between items-center px-8 py-4 bg-white shadow-md z-50">
+                    <Link to="/">
+                        <h1 className="text-xl font-bold text-blue-600">JobConnect</h1>
+                    </Link>
+                    <nav className="flex items-center gap-4">
+                        <Link to={'/browse'}>Browse</Link>
+                        {!user ? (
                             <div className="log flex gap-10 items-center">
-                                <Link to="/login"><Button >Login</Button></Link>
-                                <Link to="/signUp"><Button>SignIn</Button></Link>
+                                <Link to="/next/login">
+                                    <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                        Sign In
+                                    </button>
+                                </Link>
                             </div>
                         ) : (
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Avatar className='px-2'>
+                                    <Avatar className="avatar px-2">
                                         <img
-                                            className='size-9 rounded-md'
-                                            src={user?.profile?.profilePhoto || 'https://github.com/shadcn.png'}
-                                            alt="@shadcn"
+                                            className="size-9 rounded-full"
+                                            src={user?.profile?.profilePhoto || "https://placehold.co/100x100"}
+                                            alt="profile"
                                         />
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent>
-                                    <div class="box">
-                                        <div className="side-content">
-                                            <Avatar class="mini-img">
-                                                <img className='size-10 rounded-md' src={user?.profile?.profilePhoto} />
+                                    <div className="box">
+                                        <div className="side-content flex items-center gap-3">
+                                            <Avatar>
+                                                <img
+                                                    className="size-10 rounded-full"
+                                                    src={user?.profile?.profilePhoto}
+                                                    alt="profile"
+                                                />
                                             </Avatar>
                                             <div className="text-content">
                                                 <h4>{user?.fullname}</h4>
@@ -81,19 +76,21 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            {
-                                                user && user?.role === 'student' && (
-                                                    <Button className='flex mb-2 mt-2'><Link to='/profile'>View Profile</Link></Button>
-                                                )
-                                            }
-                                            <Button className='flex' onClick={LogoutButton}>Logout</Button>
+                                            {user?.role === "student" && (
+                                                <Button className="flex mb-2 mt-2">
+                                                    <Link to="/profile">View Profile</Link>
+                                                </Button>
+                                            )}
+                                            <Button className="flex" onClick={LogoutButton}>
+                                                Logout
+                                            </Button>
                                         </div>
                                     </div>
                                 </PopoverContent>
                             </Popover>
-                        )
-                    }
-                </div>
+                        )}
+                    </nav>
+                </header>
             </main >
         </>
     )

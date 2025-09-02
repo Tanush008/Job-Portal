@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Button } from './ui/button'
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
-import { Bookmark } from 'lucide-react'
-import { Label } from './ui/label'
-import { RadioGroup, RadioGroupItem } from './ui/radio-group'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setsearchedByQuery } from '@/redux/jobSlice'
-// import { RadioGroup } from '@mui/material'
 
 const filterData = [
     {
@@ -22,43 +16,51 @@ const filterData = [
         array: ["0-40k", "42-1lakh", "1lakh to 5lakh"]
     },
 ]
+
 const FilterPage = () => {
-    const [selected, setSelectedValue] = useState('')
+    const [selected, setSelected] = useState('')
     const dispatch = useDispatch()
     const changeEventHandler = (value) => {
-        setSelectedValue(value)
+        setSelected(value)
     }
     useEffect(() => {
         dispatch(setsearchedByQuery(selected))
     }, [selected])
     return (
-        <div className='w-full bg-black p-3 rounded-md '>
+        <div className='w-full p-3 rounded-md mt-4 py-5'>
             <h1 className='font-bold text-lg'>Filter Jobs</h1>
             <hr className='mt-3' />
-            <RadioGroup onValueChange={changeEventHandler} value={selected} className='space-y-4'>
-                {
-                    filterData.map((data, index) => (
-                        <div key={index} className='mb-4'>
-                            <h1 className='font-bold text-lg mb-2'>{data.filterType}</h1>
-                            {
-                                data.array.map((item, idx) => {
-                                    const ItemId = `id${index}-${idx}`
-                                    return (
-                                        <div key={ItemId} className='flex items-center space-x-2 my-2'>
-                                            <RadioGroupItem
-                                                value={item}
-                                                id={ItemId}
-                                                className='cursor-pointer appearance-none border border-gray-300 rounded-full checked:bg-blue-600 checked:border-transparent focus:outline-none transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue-100'
-                                            />
-                                            <Label htmlFor={ItemId} className='cursor-pointer text-gray-700 hover:text-blue-600 transition duration-300 ease-in-out'>{item}</Label>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    ))
-                }
-            </RadioGroup>
+            {filterData.map((data, index) => (
+                <div key={index} className='mb-4'>
+                    <h1 className='font-bold text-lg mb-2'>{data.filterType}</h1>
+                    {data.array.map((item, idx) => {
+                        const ItemId = `id${index}-${idx}`
+                        return (
+                            <label
+                                key={ItemId}
+                                htmlFor={ItemId}
+                                className="flex items-center space-x-3 cursor-pointer my-2"
+                            >
+                                <span className="relative">
+                                    <input
+                                        type="radio"
+                                        id={ItemId}
+                                        name={data.filterType}
+                                        value={item}
+                                        checked={selected === item}
+                                        onChange={() => changeEventHandler(item)}
+                                        className="peer appearance-none w-5 h-5 border-2 border-blue-400 rounded-full checked:border-blue-600 checked:bg-blue-100 transition-all duration-200"
+                                    />
+                                    <span className="pointer-events-none absolute left-0 top-0 w-5 h-5 flex items-center justify-center">
+                                        <span className="w-2.5 h-2.5 rounded-full bg-blue-600 opacity-0 peer-checked:opacity-100 transition-all duration-200"></span>
+                                    </span>
+                                </span>
+                                <span className="text-gray-700 hover:text-blue-600 transition">{item}</span>
+                            </label>
+                        )
+                    })}
+                </div>
+            ))}
         </div>
     )
 }

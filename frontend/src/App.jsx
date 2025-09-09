@@ -15,6 +15,7 @@ import PostJobs from './components/admin/PostJobs'
 import Applicants from './components/admin/Applicants'
 // import AuthTransition from './components/auth/AuthTransition'
 import Auth from './components/auth/Auth'
+import SaveForlater from './components/SaveForlater'
 function App() {
   const appRouter = createBrowserRouter([
     {
@@ -80,6 +81,10 @@ function App() {
       path: '/admin/jobs/:id',
       element: <PostJobs />
     },
+    {
+      path:'/save_for_later',
+      element:<SaveForlater/>
+    }
   ])
   return (
     <>

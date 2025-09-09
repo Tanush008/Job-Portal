@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom'
 import { Badge } from './ui/badge'
 import React from 'react'
@@ -21,8 +22,8 @@ const LatestJobsCard = ({ job }) => {
                 </div >
                 <div className='flex gap-2 items-center mt-2'>
                     <Badge className='text-blue-700 font-bold' variant='ghost'>{job?.position} Positions</Badge>
-                    <Badge className='text-blue-700 font-bold' variant='ghost'>Part Time</Badge>
-                    <Badge className='text-blue-700 font-bold' variant='ghost'>{job?.salary}LPA</Badge>
+                    {/* <Badge className='text-blue-700 font-bold' variant='ghost'>Part Time</Badge> */}
+                    <Badge className='text-blue-700 font-bold' variant='ghost'>{job?.salary}INR</Badge>
                     {/* <Badge variant="outline">Badge</Badge> */}
 
                 </div>

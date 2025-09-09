@@ -40,6 +40,9 @@ export const postJob = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
 export const AllJobs = async (req, res) => {
   try {
     const keyword = req.query.keyword || "";
@@ -47,6 +50,10 @@ export const AllJobs = async (req, res) => {
       $or: [
         { title: { $regex: keyword, $options: "i" } },
         { desc: { $regex: keyword, $options: "i" } },
+        { position: { $regex: keyword, $options: "i" } },
+        { location: { $regex: keyword, $options: "i" } },
+        // { salary: { $regex: keyword, $options: "i" } },
+        { requirements: { $regex: keyword, $options: "i" } },
       ],
     };
     const jobs = await Job.find(query)
@@ -66,6 +73,9 @@ export const AllJobs = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
 export const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;

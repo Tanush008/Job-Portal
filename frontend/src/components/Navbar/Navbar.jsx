@@ -84,6 +84,9 @@ const Navbar = () => {
                                             <Button className="flex" onClick={LogoutButton}>
                                                 Logout
                                             </Button>
+                                            <Button className="flex mb-2 mt-2">
+                                                <Link to="/save_for_later">Save for later</Link>
+                                            </Button>
                                         </div>
                                     </div>
                                 </PopoverContent>

@@ -21,9 +21,9 @@ const HomeSection = () => {
     // console.log(user);
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const { searchedByQuery, allJobs } = useSelector(store => store.jobs)
+    const { searchedByQuerys, allJobs } = useSelector(store => store.jobs)
     // console.log(allJobs);
-    const [searchInput, setSearchInput] = useState(searchedByQuery || "")
+    const [searchInput, setSearchInput] = useState(searchedByQuerys || "")
 
     const LogoutButton = async () => {
         try {

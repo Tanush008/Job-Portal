@@ -15,7 +15,7 @@ const JobsDesription = () => {
     const dispatch = useDispatch()
     const { singleJob } = useSelector(store => store.jobs)
     const intialApply = singleJob?.application?.some(application => application.applicant === user?._id) || false;
-    console.log(intialApply);
+    // console.log(intialApply);
     const [isApplied, setApplied] = useState(intialApply)
     const applyJobHandler = async () => {
         try {
@@ -41,7 +41,7 @@ const JobsDesription = () => {
                 const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
                     withCredentials: true
                 })
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data.success) {
                     dispatch(setSingleJob(res.data.job))
                     setApplied(res.data.job.application.some(application => application.applicant === user?._id))

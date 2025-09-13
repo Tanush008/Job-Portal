@@ -7,7 +7,7 @@ import cloudinary from "../utils/cloudinary.js";
 // Register
 export const register = async (req, res) => {
   try {
-    const { fullname, email, password, role } = req.body;
+    const { fullname, email, password, role, phoneNumber } = req.body;
 
     if (!fullname || !email || !password || !role) {
       return res.status(400).json({
@@ -15,7 +15,6 @@ export const register = async (req, res) => {
         success: false,
       });
     }
-
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -24,12 +23,12 @@ export const register = async (req, res) => {
       });
     }
 
-    let profilePhoto = "https://via.placeholder.com/150"; // Default profile photo
-    if (req.file) {
-      const fileUri = getDatauri(req.file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-      profilePhoto = cloudResponse.secure_url;
-    }
+    // // let profilePhoto = "https://via.placeholder.com/150"; // Default profile photo
+    // if (req.files) {
+    //   const fileUri = getDatauri(req.files);
+    //   const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    //   profilePhoto = cloudResponse.secure_url;
+    // }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({
@@ -37,13 +36,16 @@ export const register = async (req, res) => {
       email,
       role,
       password: hashedPassword,
-      profile: {
-        profilePhoto,
-      },
+      phoneNumber,
     });
 
     return res.status(201).json({
       message: "Register Successfully",
+      user: {
+        fullname,
+        email,
+        phoneNumber,
+      },
       success: true,
     });
   } catch (err) {
@@ -98,6 +100,7 @@ export const login = async (req, res) => {
       email: user.email,
       password: user.password,
       profile: user.profile,
+      phoneNumber: user.phoneNumber,
       role: user.role,
     };
     return res

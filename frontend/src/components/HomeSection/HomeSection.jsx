@@ -63,7 +63,20 @@ const HomeSection = () => {
                         <h1 className="text-xl font-bold text-blue-600">JobConnect</h1>
                     </Link>
                     <nav className="flex items-center gap-4">
-                        <Link to={'/browse'}>Browse</Link>
+                        <ul className='flex font-medium items-center gap-5'>
+                            {
+                                user && user.role === 'recruiter' ? (
+                                    <>
+                                        <li><Link to="/admin/companies">Companies</Link></li>
+                                        <li><Link to="/admin/jobs">Jobs</Link></li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li><Link to="/browse">Browse</Link></li>
+                                    </>
+                                )
+                            }
+                        </ul>
                         {
                             !user ? (
                                 <div className="log flex gap-10 items-center">

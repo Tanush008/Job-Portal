@@ -1,27 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { APPLICANT_END_POINT } from '../utils/constant';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { MoreHorizontal } from 'lucide-react';
 import axios from 'axios';
-// import { TableRow } from '@mui/material';
+
 const shortlistingStatus = ["Accepted", "Rejected"];
+
 const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
+    // Local state to track status for each applicant
+    const [statusMap, setStatusMap] = useState({});
 
     const statusHandler = async (status, id) => {
-        console.log('called');
         try {
             axios.defaults.withCredentials = true;
             const res = await axios.post(`${APPLICANT_END_POINT}/status/${id}/update`, { status });
-            console.log(res);
             if (res.data.success) {
-                return (res.data.message);
+                setStatusMap(prev => ({
+                    ...prev,
+                    [id]: status
+                }));
             }
         } catch (error) {
             console.log(error);
-
         }
     }
 
@@ -36,6 +39,7 @@ const ApplicantsTable = () => {
                         <TableHead>Contact</TableHead>
                         <TableHead>Resume</TableHead>
                         <TableHead>Date</TableHead>
+                        <TableHead>Status</TableHead>
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -51,7 +55,11 @@ const ApplicantsTable = () => {
                                         item.applicant?.profile?.resume ? <a className="text-blue-600 cursor-pointer" href={item?.applicant?.profile?.resume} target="_blank" rel="noopener noreferrer">{item?.applicant?.profile?.resumeOriginalName}</a> : <span>NA</span>
                                     }
                                 </TableCell>
+                                {/* {console.log(item.applicant.profile)} */}
                                 <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
+                                <TableCell>
+                                    {statusMap[item._id] || item.status || "Pending"}
+                                </TableCell>
                                 <TableCell className="float-right cursor-pointer">
                                     <Popover>
                                         <PopoverTrigger>
@@ -59,13 +67,15 @@ const ApplicantsTable = () => {
                                         </PopoverTrigger>
                                         <PopoverContent className="w-32">
                                             {
-                                                shortlistingStatus.map((status, index) => {
-                                                    return (
-                                                        <div onClick={() => statusHandler(status, item?._id)} key={index} className='flex w-fit items-center my-2 cursor-pointer'>
-                                                            <span>{status}</span>
-                                                        </div>
-                                                    )
-                                                })
+                                                shortlistingStatus.map((status, index) => (
+                                                    <div
+                                                        onClick={() => statusHandler(status, item?._id)}
+                                                        key={index}
+                                                        className='flex w-fit items-center my-2 cursor-pointer'
+                                                    >
+                                                        <span>{status}</span>
+                                                    </div>
+                                                ))
                                             }
                                         </PopoverContent>
                                     </Popover>

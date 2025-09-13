@@ -1,49 +1,43 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '@radix-ui/react-radio-group'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
-import axios, { Axios } from 'axios'
+// import axios from 'axios'
 import { toast } from '@/hooks/use-toast'
 import { USER_API_END_POINT } from '../utils/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader2 } from 'lucide-react'
 import { setLoading } from '@/redux/authSlice'
 import { useEffect } from 'react'
+import axios from 'axios'
 
 const SignUp = () => {
     const [input, setinput] = useState({
         fullname: "",
         email: "",
         phoneNumber: "",
-        Password: "",
-        file: "",
+        password: "",
         role: ""
     })
     const navigate = useNavigate();
     const EventHandler = (e) => {
         setinput({ ...input, [e.target.name]: e.target.value })
     }
-    const FileHandler = (e) => {
-        setinput({ ...input, file: e.target.files?.[0] });
-    }
     const { loading, user } = useSelector(store => store.auth)
     const dispatch = useDispatch();
     const submitHandler = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("fullname", input.fullname);
-        formData.append("email", input.email);
-        formData.append("password", input.Password);
-        formData.append("phoneNumber", input.phoneNumber);
-        formData.append("role", input.role);
-        if (input.file) {
-            formData.append("file", input.file);
-        }
+        // const formData = new FormData();
+        // formData.append("fullname", input.fullname);
+        // formData.append("email", input.email);
+        // formData.append("password", input.password);
+        // formData.append("phoneNumber", input.phoneNumber);
+        console.log(input);
         try {
             dispatch(setLoading(true));
-            const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+            const res = await axios.post(`${USER_API_END_POINT}/register`, input, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    "Content-Type": "application/json"
                 },
                 withCredentials: true,
             })
@@ -90,11 +84,12 @@ const SignUp = () => {
                             <input
                                 className="mt-1 block  h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 type="text"
-                                id="Phone"
-                                name="PhoneNumber"
+                                id="phone"
+                                value={input.phoneNumber}
+                                maxLength={10} // stops user from typing more than 10 digits
+                                // pattern="[0-9]{10}"
+                                name="phoneNumber"
                                 placeholder="Phone Number"
-                                required
-                                value={input.PhoneNumber}
                                 onChange={EventHandler}
                             />
                         </div>
@@ -119,10 +114,10 @@ const SignUp = () => {
                                 className="mt-1 block  h-[40px] px-3 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 type="password"
                                 id="password"
-                                name="Password"
+                                name="password"
                                 placeholder="Password"
                                 required
-                                value={input.Password}
+                                value={input.password}
                                 onChange={EventHandler}
                             />
                         </div>
@@ -152,7 +147,7 @@ const SignUp = () => {
                                 />
                                 <label htmlFor="student" className="text-sm font-medium text-gray-700">Student</label>
                             </div>
-                            <div className="mt-4">
+                            {/* <div className="mt-4">
                                 <label htmlFor="profile" className="block text-sm font-medium text-gray-700">Profile</label>
                                 <input
                                     className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
@@ -163,7 +158,7 @@ const SignUp = () => {
                                     required
                                     onChange={FileHandler}
                                 />
-                            </div>
+                            </div> */}
                         </RadioGroup>
 
                         {

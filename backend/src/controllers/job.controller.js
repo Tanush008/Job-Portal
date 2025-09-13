@@ -41,8 +41,6 @@ export const postJob = async (req, res) => {
   }
 };
 
-
-
 export const AllJobs = async (req, res) => {
   try {
     const keyword = req.query.keyword || "";
@@ -74,8 +72,6 @@ export const AllJobs = async (req, res) => {
   }
 };
 
-
-
 export const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;
@@ -95,7 +91,7 @@ export const getJobById = async (req, res) => {
 };
 export const AdminJob = async (req, res) => {
   try {
-    const adminId = req.id;
+    const adminId = req.id; 
     // console.log(adminId);
     const jobs = await Job.find({ created_By: adminId }).populate({
       path: "company",
@@ -114,3 +110,17 @@ export const AdminJob = async (req, res) => {
     console.log(error);
   }
 };
+
+export const publicJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find()
+      .populate("company", "name") // populate only the name field from Company
+      .select("title company location");
+
+    res.json({ success: true, jobs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+

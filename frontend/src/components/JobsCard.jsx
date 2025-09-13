@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import { addSaveForLater } from '@/redux/jobSlice'
 
 const JobCard = ({ job }) => {
-    console.log(job);
+    // console.log(job);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showMsg, setShowMsg] = useState(false);

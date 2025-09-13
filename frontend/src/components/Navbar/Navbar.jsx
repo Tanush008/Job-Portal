@@ -40,7 +40,20 @@ const Navbar = () => {
                         <h1 className="text-xl font-bold text-blue-600">JobConnect</h1>
                     </Link>
                     <nav className="flex items-center gap-4">
-                        <Link to={'/browse'}>Browse</Link>
+                        <ul className='flex font-medium items-center gap-5'>
+                            {
+                                user && user.role === 'recruiter' ? (
+                                    <>
+                                        <li><Link to="/admin/companies">Companies</Link></li>
+                                        <li><Link to="/admin/jobs">Jobs</Link></li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li><Link to="/browse">Browse</Link></li>
+                                    </>
+                                )
+                            }
+                        </ul>
                         {!user ? (
                             <div className="log flex gap-10 items-center">
                                 <Link to="/next/login">
@@ -84,9 +97,11 @@ const Navbar = () => {
                                             <Button className="flex" onClick={LogoutButton}>
                                                 Logout
                                             </Button>
-                                            <Button className="flex mb-2 mt-2">
-                                                <Link to="/save_for_later">Save for later</Link>
-                                            </Button>
+                                            {user?.role === "student" && (
+                                                <Button className="flex mb-2 mt-2">
+                                                    <Link to="/save_for_later">Save for later</Link>
+                                                </Button>
+                                            )}
                                         </div>
                                     </div>
                                 </PopoverContent>

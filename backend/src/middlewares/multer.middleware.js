@@ -5,3 +5,4 @@ export const singleUpload = multer({ storage }).fields([
   { name: "profilePhoto", maxCount: 1 },
   { name: "resume", maxCount: 1 },
 ]);
+export const single = multer({ storage }).single("file");

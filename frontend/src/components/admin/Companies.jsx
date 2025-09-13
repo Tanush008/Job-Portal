@@ -21,19 +21,22 @@ const Companies = () => {
     return (
         <div>
             <Navbar />
-            <div className='max-w-6xl mx-auto my-10'>
-                <div className='flex items-center justify-between my-5 text-white'>
-                    <input
-                        className="w-fit border-2 rounded-md py-3 px-2 text-black border-gray-200 focus:border-[#97d700] focus:ring-2 focus:ring-[#97d70033] transition-all duration-200 outline-none shadow-sm placeholder-gray-400"
-                        placeholder="Filter by name"
-                        onChange={(e) => setInput(e.target.value)}
-                    />
-                    <Button onClick={() => navigate("/admin/companies/create")}>New Company</Button>
+            <main className="pt-20 px-6">
+
+                <div className='max-w-6xl mx-auto my-10'>
+                    <div className='flex items-center justify-between my-5 text-white'>
+                        <input
+                            className="w-fit border-2 rounded-md py-3 px-2 text-black border-gray-200 focus:border-[#97d700] focus:ring-2 focus:ring-[#97d70033] transition-all duration-200 outline-none shadow-sm placeholder-gray-400"
+                            placeholder="Filter by name"
+                            onChange={(e) => setInput(e.target.value)}
+                        />
+                        <Button onClick={() => navigate("/admin/companies/create")}>New Company</Button>
+                    </div>
+                    {/* <CompaniesTable/> */}
+                    {/* <h1>fdfa</h1> */}
+                    <CompaniesTable />
                 </div>
-                {/* <CompaniesTable/> */}
-                {/* <h1>fdfa</h1> */}
-                <CompaniesTable />
-            </div>
+            </main>
         </div>
     )
 }

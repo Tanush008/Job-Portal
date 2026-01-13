@@ -12,7 +12,7 @@ import { setsearchedByQuerys } from '@/redux/jobSlice';
 const Browse = () => {
     useGetAllJobs();
     const { allJobs } = useSelector(store => store.jobs);
-    // console.log(allJobs);
+    // console.log(allJobs); 
     const dispatch = useDispatch();
     useEffect(() => {
         return () => {
